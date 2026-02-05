@@ -5,10 +5,10 @@ public class PatientInfo {
     private int age;
     private String sex; 
 
-    public Patient(String fname, String mname, String lname, int age, String sex) {
+    public PatientInfo(String fname, String mname, String lname, int age, String sex) {
         this.fname = fname;
         this.mname = mname;
-        this.lnamename = lname;
+        this.lname = lname;
         this.age = age;
         this.sex = sex;
     }
