@@ -12,7 +12,6 @@ public class PatientInfo {
     private int age;
     private String sex;
 
-    private String address;
     private String city;
     private String province;
 
@@ -22,9 +21,7 @@ public class PatientInfo {
     private String timeOfLastMeal;
     private String requestingPhysician;
 
-    public PatientInfo(String fname, String mname, String lname, int age, String sex,
-                       String address, String city, String province,
-                       String timeOfLastMeal, String requestingPhysician) {
+    public PatientInfo(String fname, String mname, String lname, int age, String sex, String city, String province, String timeOfLastMeal, String requestingPhysician) {
 
         this.patientID = nextID++; 
 
@@ -34,7 +31,6 @@ public class PatientInfo {
         this.age = age;
         this.sex = sex;
 
-        this.address = address;
         this.city = city;
         this.province = province;
 
@@ -48,16 +44,14 @@ public class PatientInfo {
     }
 
     public String toString() {
-        return "Patient ID: " + patientID +
-               "Patient Name: " + fname + " " + mname + " " + lname +
-               "Age: " + age +
-               "Sex: " + sex +
-               "Address: " + address +
-               "City: " + city +
-               "Province: " + province +
-               "Date of Collection: " + dateOfCollection +
-               "Time of Collection: " + timeOfCollection +
-               "Time of Last Meal: " + timeOfLastMeal +
-               "Requesting Physician: " + requestingPhysician;
+        return "\nPatient ID: " + patientID +
+               "\nPatient Name: " + fname + " " + mname + " " + lname +
+               "\nAge: " + age +
+               "\nSex: " + sex +
+               "\nAddress: " + province + "," + city +
+               "\nDate of Collection: " + dateOfCollection +
+               "\nTime of Collection: " + timeOfCollection +
+               "\nTime of Last Meal: " + timeOfLastMeal +
+               "\nRequesting Physician: " + requestingPhysician;
     }
 }

@@ -21,14 +21,11 @@ public class PagunTudenClinicApp{
         input.nextLine(); 
         String sex = input.nextLine();
 
-        System.out.print("Enter Address: ");
-        String address = input.nextLine();
+        System.out.print("Enter Province: ");
+        String province = input.nextLine();
 
         System.out.print("Enter City: ");
         String city = input.nextLine();
-
-        System.out.print("Enter Province: ");
-        String province = input.nextLine();
 
         System.out.print("Enter Time of Last Meal: ");
         String lastMeal = input.nextLine();
@@ -36,8 +33,7 @@ public class PagunTudenClinicApp{
         System.out.print("Enter Requesting Physician: ");
         String physician = input.nextLine();
 
-        PatientInfo info = new PatientInfo(fname, mname, lname, age, sex,
-                address, city, province, lastMeal, physician);
+        PatientInfo info = new PatientInfo(fname, mname, lname, age, sex, city, province, lastMeal, physician);
 
         System.out.println("===== PATIENT INFORMATION =====");
         System.out.println(info);
