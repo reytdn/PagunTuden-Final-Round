@@ -21,5 +21,7 @@ public class PagunTudenClinicApp{
         String sex = input.nextLine();
 
         PatientInfo Info = new PatientInfo(fname, mname, lname, age, sex);
+
+        input.close();
     }
 }
