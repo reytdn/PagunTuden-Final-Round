@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class PagunTudenClinicApp{
+public class PagunTudenClinicApp {
     public static void main(String[] args) {
 
         Scanner input = new Scanner(System.in);
@@ -17,8 +17,9 @@ public class PagunTudenClinicApp{
         System.out.print("Enter Age: ");
         int age = input.nextInt();
 
-        System.out.print("Enter Sex (F/M): ");
         input.nextLine(); 
+
+        System.out.print("Enter Sex (F/M): ");
         String sex = input.nextLine();
 
         System.out.print("Enter Province: ");
@@ -30,12 +31,25 @@ public class PagunTudenClinicApp{
         System.out.print("Enter Time of Last Meal: ");
         String lastMeal = input.nextLine();
 
+        System.out.print("Enter (AM/PM): ");
+        String amorpm = input.nextLine();
+
         System.out.print("Enter Requesting Physician: ");
         String physician = input.nextLine();
 
-        PatientInfo info = new PatientInfo(fname, mname, lname, age, sex, city, province, lastMeal, physician);
 
-        System.out.println("===== PATIENT INFORMATION =====");
+        PatientInfo info = new PatientInfo(
+                fname, mname, lname,
+                age, sex,
+                city, province,
+                lastMeal, amorpm,
+                physician
+        );
+
+
+        System.out.println("\n===== PATIENT INFORMATION =====");
         System.out.println(info);
+
+        input.close();
     }
 }

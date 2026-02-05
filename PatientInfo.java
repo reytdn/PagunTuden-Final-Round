@@ -19,9 +19,10 @@ public class PatientInfo {
     private String timeOfCollection;
 
     private String timeOfLastMeal;
+    private String amorpm;
     private String requestingPhysician;
 
-    public PatientInfo(String fname, String mname, String lname, int age, String sex, String city, String province, String timeOfLastMeal, String requestingPhysician) {
+    public PatientInfo(String fname, String mname, String lname, int age, String sex, String city, String province, String timeOfLastMeal, String amorpm,  String requestingPhysician) {
 
         this.patientID = nextID++; 
 
@@ -38,8 +39,9 @@ public class PatientInfo {
 
         DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm a");
         this.timeOfCollection = LocalTime.now().format(timeFormat);
-
+        
         this.timeOfLastMeal = timeOfLastMeal;
+        this.amorpm = amorpm;
         this.requestingPhysician = requestingPhysician;
     }
 
@@ -50,8 +52,8 @@ public class PatientInfo {
                "\nSex: " + sex +
                "\nAddress: " + province + "," + city +
                "\nDate of Collection: " + dateOfCollection +
-               "\nTime of Collection: " + timeOfCollection +
-               "\nTime of Last Meal: " + timeOfLastMeal +
+               "\nTime of Collection: " + timeOfCollection + 
+               "\nTime of Last Meal: " + timeOfLastMeal + " " + amorpm +
                "\nRequesting Physician: " + requestingPhysician;
     }
 }
