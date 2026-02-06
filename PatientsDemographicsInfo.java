@@ -2,7 +2,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-public class PatientInfo {
+public class PatientsDemographicsInfo {
     private static int nextID = 1001;
 
     private int patientID;
@@ -22,7 +22,7 @@ public class PatientInfo {
     private String amorpm;
     private String requestingPhysician;
 
-    public PatientInfo(String fname, String mname, String lname, int age, String sex, String city, String province, String timeOfLastMeal, String amorpm,  String requestingPhysician) {
+    public PatientsDemographicsInfo(String fname, String mname, String lname, int age, String sex, String city, String province, String timeOfLastMeal, String amorpm,  String requestingPhysician) {
 
         this.patientID = nextID++; 
 
