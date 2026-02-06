@@ -12,7 +12,9 @@ public class PagunTudenClinicAppGUI extends JFrame {
     private JTextField birthdateField, ageField;
     private JTextField provinceField, cityField;
     private JTextField lastMealField, physicianField;
+
     private JComboBox<String> sexBox, mealAmPmBox, testBox;
+
     private JTextField valueField;
     private JTextArea resultArea;
 
@@ -32,10 +34,11 @@ public class PagunTudenClinicAppGUI extends JFrame {
         setSize(1000, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout(10,10));
 
-        // ================= PATIENT PANEL =================
-        JPanel patientPanel = new JPanel(new GridLayout(8,2,5,5));
+        JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+
+        JPanel patientPanel = new JPanel(new GridLayout(9, 2, 8, 8));
         patientPanel.setBorder(BorderFactory.createTitledBorder("Patient Information"));
 
         fnameField = new JTextField();
@@ -45,11 +48,8 @@ public class PagunTudenClinicAppGUI extends JFrame {
         ageField = new JTextField();
         provinceField = new JTextField();
         cityField = new JTextField();
-        lastMealField = new JTextField();
-        physicianField = new JTextField();
 
-        sexBox = new JComboBox<>(new String[]{"M","F"});
-        mealAmPmBox = new JComboBox<>(new String[]{"AM","PM"});
+        sexBox = new JComboBox<>(new String[]{"M", "F"});
 
         patientPanel.add(new JLabel("Patient ID (Auto):"));
         patientPanel.add(new JLabel(String.valueOf(patientID)));
@@ -78,130 +78,244 @@ public class PagunTudenClinicAppGUI extends JFrame {
         patientPanel.add(new JLabel("City:"));
         patientPanel.add(cityField);
 
-        add(patientPanel, BorderLayout.NORTH);
-
-        // ================= CENTER PANEL =================
-        JPanel centerPanel = new JPanel(new GridLayout(6,2,5,5));
-        centerPanel.setBorder(BorderFactory.createTitledBorder("Laboratory Details"));
+        JPanel labPanel = new JPanel(new GridLayout(9, 2, 8, 8));
+        labPanel.setBorder(BorderFactory.createTitledBorder("Laboratory Details"));
 
         testBox = new JComboBox<>(new String[]{
-                "FBS","RBS","Total Cholesterol","HDL","LDL",
-                "Triglycerides","Creatinine","Uric Acid",
-                "BUN","AST","ALT","Sodium",
-                "Potassium","Chloride",
-                "Total Calcium","Ionized Calcium"
+                "FBS", "RBS", "Total Cholesterol", "HDL", "LDL",
+                "Triglycerides", "Creatinine", "Uric Acid",
+                "BUN", "AST", "ALT", "Sodium",
+                "Potassium", "Chloride",
+                "Total Calcium", "Ionized Calcium"
         });
 
         valueField = new JTextField();
+        lastMealField = new JTextField();
+        physicianField = new JTextField();
 
-        centerPanel.add(new JLabel("Select Test:"));
-        centerPanel.add(testBox);
+        mealAmPmBox = new JComboBox<>(new String[]{"AM", "PM"});
 
-        centerPanel.add(new JLabel("Enter Conventional Value:"));
-        centerPanel.add(valueField);
+        labPanel.add(new JLabel("Select Test:"));
+        labPanel.add(testBox);
 
-        centerPanel.add(new JLabel("Time of Last Meal:"));
-        centerPanel.add(lastMealField);
+        labPanel.add(new JLabel("Enter Conventional Value:"));
+        labPanel.add(valueField);
 
-        centerPanel.add(new JLabel("AM/PM:"));
-        centerPanel.add(mealAmPmBox);
+        labPanel.add(new JLabel("Time of Last Meal:"));
+        labPanel.add(lastMealField);
 
-        centerPanel.add(new JLabel("Requesting Physician:"));
-        centerPanel.add(physicianField);
+        labPanel.add(new JLabel("AM/PM:"));
+        labPanel.add(mealAmPmBox);
 
-        centerPanel.add(new JLabel("Date of Collection (Auto):"));
-        centerPanel.add(new JLabel(dateCollection));
+        labPanel.add(new JLabel("Requesting Physician:"));
+        labPanel.add(physicianField);
 
-        centerPanel.add(new JLabel("Time of Collection (Auto):"));
-        centerPanel.add(new JLabel(timeCollection));
+        labPanel.add(new JLabel("Date of Collection:"));
+        labPanel.add(new JLabel(dateCollection));
 
-        add(centerPanel, BorderLayout.CENTER);
+        labPanel.add(new JLabel("Time of Collection:"));
+        labPanel.add(new JLabel(timeCollection));
 
-        // ================= RESULT AREA =================
-        resultArea = new JTextArea();
+        JPanel topPanel = new JPanel(new GridLayout(1, 2, 15, 15));
+        topPanel.add(patientPanel);
+        topPanel.add(labPanel);
+
+        resultArea = new JTextArea(12, 50);
         resultArea.setEditable(false);
         resultArea.setFont(new Font("Monospaced", Font.PLAIN, 13));
+
         JScrollPane scroll = new JScrollPane(resultArea);
         scroll.setBorder(BorderFactory.createTitledBorder("Laboratory Result"));
 
         JButton processButton = new JButton("PROCESS TEST");
+        processButton.setFont(new Font("Arial", Font.BOLD, 14));
         processButton.addActionListener(e -> processLabTest());
 
-        JPanel bottomPanel = new JPanel(new BorderLayout());
+        JPanel bottomPanel = new JPanel(new BorderLayout(10, 10));
         bottomPanel.add(processButton, BorderLayout.NORTH);
         bottomPanel.add(scroll, BorderLayout.CENTER);
 
-        add(bottomPanel, BorderLayout.SOUTH);
+        mainPanel.add(topPanel, BorderLayout.CENTER);
+        mainPanel.add(bottomPanel, BorderLayout.SOUTH);
+
+        add(mainPanel);
     }
 
     private void processLabTest() {
-
         try {
-
             String test = (String) testBox.getSelectedItem();
             String sex = (String) sexBox.getSelectedItem();
             double value = Double.parseDouble(valueField.getText());
+
+            String lastMeal = lastMealField.getText();
+            String ampm = (String) mealAmPmBox.getSelectedItem();
+            String physician = physicianField.getText();
 
             double si = 0;
             double lowConv = 0, highConv = 0;
             double lowSI = 0, highSI = 0;
             String unitConv = "", unitSI = "";
 
-            // SAME IF STRUCTURE AS BEFORE (shortened example)
             if (test.equals("FBS")) {
                 si = CONVENTIONALtoSI.glucoseToSI(value);
-                lowConv=74; highConv=100;
-                lowSI=4.07; highSI=5.5;
-                unitConv="mg/dL"; unitSI="mmol/L";
+                lowConv = 74; highConv = 100;
+                lowSI = 4.07; highSI = 5.5;
+                unitConv = "mg/dL"; unitSI = "mmol/L";
             }
-
-            else if (test.equals("Creatinine")) {
-                si = CONVENTIONALtoSI.creatinineToSI(value);
-                unitConv="mg/dL"; unitSI="µmol/L";
-
-                if(sex.equals("M")){
-                    lowConv=0.9; highConv=1.3;
-                    lowSI=79.6; highSI=114.9;
+            else if (test.equals("RBS")) {
+                si = CONVENTIONALtoSI.glucoseToSI(value);
+                lowConv = 74; highConv = 140;
+                lowSI = 4.07; highSI = 7.8;
+                unitConv = "mg/dL"; unitSI = "mmol/L";
+            }
+            else if (test.equals("Total Cholesterol")) {
+                si = CONVENTIONALtoSI.cholesterolToSI(value);
+                lowConv = 150; highConv = 200;
+                lowSI = 3.9; highSI = 5.72;
+                unitConv = "mg/dL"; unitSI = "mmol/L";
+            }
+            else if (test.equals("HDL")) {
+                si = CONVENTIONALtoSI.hdlToSI(value);
+                unitConv = "mg/dL"; unitSI = "mmol/L";
+                if (sex.equals("M")) {
+                    lowConv = 35; highConv = 80;
+                    lowSI = 0.91; highSI = 2.08;
                 } else {
-                    lowConv=0.6; highConv=1.2;
-                    lowSI=53.04; highSI=106.08;
+                    lowConv = 42; highConv = 88;
+                    lowSI = 1.09; highSI = 2.29;
                 }
             }
+            else if (test.equals("LDL")) {
+                si = CONVENTIONALtoSI.ldlToSI(value);
+                lowConv = 50; highConv = 130;
+                lowSI = 1.3; highSI = 3.38;
+                unitConv = "mg/dL"; unitSI = "mmol/L";
+            }
+            else if (test.equals("Triglycerides")) {
+                si = CONVENTIONALtoSI.triglyceridesToSI(value);
+                unitConv = "mg/dL"; unitSI = "mmol/L";
+                if (sex.equals("M")) {
+                    lowConv = 60; highConv = 165;
+                    lowSI = 0.68; highSI = 1.88;
+                } else {
+                    lowConv = 40; highConv = 140;
+                    lowSI = 0.46; highSI = 1.6;
+                }
+            }
+            else if (test.equals("Creatinine")) {
+                si = CONVENTIONALtoSI.creatinineToSI(value);
+                unitConv = "mg/dL"; unitSI = "µmol/L";
+                if (sex.equals("M")) {
+                    lowConv = 0.9; highConv = 1.31;
+                    lowSI = 79.6; highSI = 114.9;
+                } else {
+                    lowConv = 0.6; highConv = 1.2;
+                    lowSI = 53.04; highSI = 106.08;
+                }
+            }
+            else if (test.equals("Uric Acid")) {
+                si = CONVENTIONALtoSI.uricAcidToSI(value);
+                unitConv = "mg/dL"; unitSI = "mmol/L";
+                if (sex.equals("M")) {
+                    lowConv = 3.5; highConv = 7.2;
+                    lowSI = 0.21; highSI = 0.42;
+                } else {
+                    lowConv = 2.6; highConv = 6.0;
+                    lowSI = 0.15; highSI = 0.35;
+                }
+            }
+            else if (test.equals("BUN")) {
+                si = CONVENTIONALtoSI.bunToSI(value);
+                lowConv = 6.0; highConv = 20.0;
+                lowSI = 2.14; highSI = 7.14;
+                unitConv = "mg/dL"; unitSI = "mmol/L";
+            }
+            else if (test.equals("AST")) {
+                si = CONVENTIONALtoSI.enzymeToSI(value);
+                lowConv = 0; highConv = 46;
+                lowSI = 0; highSI = 0.78;
+                unitConv = "U/L"; unitSI = "µkat/L";
+            }
+            else if (test.equals("ALT")) {
+                si = CONVENTIONALtoSI.enzymeToSI(value);
+                lowConv = 0; highConv = 49;
+                lowSI = 0; highSI = 0.83;
+                unitConv = "U/L"; unitSI = "µkat/L";
+            }
+            else if (test.equals("Sodium")) {
+                si = value;
+                lowConv = 135; highConv = 145;
+                lowSI = 135; highSI = 145;
+                unitConv = "mEq/L"; unitSI = "mmol/L";
+            }
+            else if (test.equals("Potassium")) {
+                si = value;
+                lowConv = 3.5; highConv = 5.0;
+                lowSI = 3.5; highSI = 5.0;
+                unitConv = "mEq/L"; unitSI = "mmol/L";
+            }
+            else if (test.equals("Chloride")) {
+                si = value;
+                lowConv = 96; highConv = 110;
+                lowSI = 96; highSI = 110;
+                unitConv = "mEq/L"; unitSI = "mmol/L";
+            }
+            else if (test.equals("Total Calcium")) {
+                si = CONVENTIONALtoSI.totalCalciumToSI(value);
+                lowConv = 8.6; highConv = 10.28;
+                lowSI = 2.15; highSI = 2.57;
+                unitConv = "mg/dL"; unitSI = "mmol/L";
+            }
+            else if (test.equals("Ionized Calcium")) {
+                si = CONVENTIONALtoSI.ionizedCalciumToSI(value);
+                lowConv = 4.4; highConv = 5.2;
+                lowSI = 1.10; highSI = 1.30;
+                unitConv = "mg/dL"; unitSI = "mmol/L";
+            }
 
-            // (You can paste the rest of your IF blocks here exactly same as before)
-
-            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
+            String interpretation;
+            if (value > highConv) interpretation = "HIGH";
+            else if (value < lowConv) interpretation = "LOW";
+            else interpretation = "NORMAL";
 
             resultArea.setText(
-                    "=========== PAGUNTUDEN CLINIC LAB REPORT ===========\n\n" +
-                    "Patient ID: " + patientID +
-                    "\nName: " + fnameField.getText() + " " +
-                    mnameField.getText() + " " +
-                    lnameField.getText() +
-                    "\nBirthdate: " + birthdateField.getText() +
-                    "\nAge: " + ageField.getText() +
-                    "\nSex: " + sex +
-                    "\nAddress: " + provinceField.getText() + ", " + cityField.getText() +
-                    "\nDate Collected: " + dateCollection +
+                    "=========== PAGUNTUDEN CLINIC LABORATORY REPORT ===========\n\n" +
+                    "Date Collected: " + dateCollection +
                     "\nTime Collected: " + timeCollection +
-                    "\nLast Meal: " + lastMealField.getText() + " " + mealAmPmBox.getSelectedItem() +
-                    "\nRequesting Physician: " + physicianField.getText() +
-                    "\n\n---------------- TEST RESULT ----------------\n" +
-                    "\nTest: " + test +
-                    "\nConventional: " + value + " " + unitConv +
-                    "\nReference: " + lowConv + " - " + highConv + " " + unitConv +
-                    "\n\nSI Unit: " + String.format("%.2f", si) + " " + unitSI +
-                    "\nReference: " + lowSI + " - " + highSI + " " + unitSI +
-                    "\n\nINTERPRETATION: " + interpretation +
-                    "\n====================================================="
+                    "\n\n---------------- PATIENT INFORMATION ----------------\n" +
+                    "Patient ID: " + patientID +
+                    "\nFull Name : " + fnameField.getText() + " " +
+                                    mnameField.getText() + " " +
+                                    lnameField.getText() +
+                    "\nAge       : " + ageField.getText() +
+                    "\nSex       : " + sex +
+                    "\nAddress   : " + provinceField.getText() + ", " +
+                                    cityField.getText() +
+                    "\n\n---------------- REQUEST DETAILS ----------------\n" +
+                    "Requesting Physician: " + physician +
+                    "\nLast Meal Time       : " + lastMeal + " " + ampm +
+                    "\n\n---------------- LAB TEST RESULT ----------------\n" +
+                    "Test Name: " + test +
+                    "\nConventional Value: " + value + " " + unitConv +
+                    "\nReference Range   : " + lowConv + " - " + highConv +
+                    "\nSI Converted Value: " + String.format("%.2f", si) + " " + unitSI +
+                    "\nReference Range   : " + lowSI + " - " + highSI +
+                    "\n\n---------------- INTERPRETATION ----------------\n" +
+                    "Result Status: " + interpretation +
+                    "\n\n========================================================="
             );
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Please enter valid numeric value.");
+            JOptionPane.showMessageDialog(this,
+                    "Please enter a valid numeric value.",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public static void main(String[] args) {
-        new PagunTudenClinicAppGUI().setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            new PagunTudenClinicAppGUI().setVisible(true);
+        });
     }
 }

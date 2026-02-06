@@ -7,20 +7,28 @@ public class LabTestMenuSystem {
 
     public LabTestMenuSystem(String sex) {
         labTests = new SelectedLabTests();
-        this.sex = sex.toUpperCase();
+
+        this.sex = sex.trim().toUpperCase().startsWith("M") ? "M" : "F";
     }
 
     public void startLabMenu() {
 
         Scanner input = new Scanner(System.in);
-        int choice = 0;
+        int choice;
 
-        while (choice != 18) {
+        while (true) {
             displayMenu();
             choice = input.nextInt();
+
+            if (choice == 18) {
+                System.out.println("Exiting Lab Menu...");
+                break;
+            }
+
             processChoice(choice, input);
         }
 
+        input.close();
         System.out.println("Program Ended.");
     }
 
@@ -58,7 +66,8 @@ public class LabTestMenuSystem {
             double lowConv = 74, highConv = 100;
             double lowSI = 4.07, highSI = 5.5;
 
-            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
+            // ✅ FIX: USE CONVENTIONAL FOR INTERPRETATION
+            String interpretation = rangeFandM.interpret(value, lowConv, highConv);
 
             labTests.addTestResult("FBS", value, si,
                     "mg/dL", "mmol/L",
@@ -75,7 +84,8 @@ public class LabTestMenuSystem {
             double lowConv = 74, highConv = 140;
             double lowSI = 4.07, highSI = 7.8;
 
-            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
+            // ✅ FIX
+            String interpretation = rangeFandM.interpret(value, lowConv, highConv);
 
             labTests.addTestResult("RBS", value, si,
                     "mg/dL", "mmol/L",
@@ -92,7 +102,8 @@ public class LabTestMenuSystem {
             double lowConv = 150, highConv = 200;
             double lowSI = 3.9, highSI = 5.72;
 
-            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
+            // ✅ FIX
+            String interpretation = rangeFandM.interpret(value, lowConv, highConv);
 
             labTests.addTestResult("Total Cholesterol", value, si,
                     "mg/dL", "mmol/L",
@@ -116,7 +127,8 @@ public class LabTestMenuSystem {
                 lowSI = 1.09; highSI = 2.29;
             }
 
-            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
+            // ✅ FIX
+            String interpretation = rangeFandM.interpret(value, lowConv, highConv);
 
             labTests.addTestResult("HDL", value, si,
                     "mg/dL", "mmol/L",
@@ -133,7 +145,8 @@ public class LabTestMenuSystem {
             double lowConv = 50, highConv = 130;
             double lowSI = 1.3, highSI = 3.38;
 
-            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
+            // ✅ FIX
+            String interpretation = rangeFandM.interpret(value, lowConv, highConv);
 
             labTests.addTestResult("LDL", value, si,
                     "mg/dL", "mmol/L",
@@ -157,7 +170,8 @@ public class LabTestMenuSystem {
                 lowSI = 0.46; highSI = 1.6;
             }
 
-            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
+            // ✅ FIX
+            String interpretation = rangeFandM.interpret(value, lowConv, highConv);
 
             labTests.addTestResult("Triglycerides", value, si,
                     "mg/dL", "mmol/L",
@@ -181,7 +195,8 @@ public class LabTestMenuSystem {
                 lowSI = 53.04; highSI = 106.08;
             }
 
-            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
+            // ✅ FIX
+            String interpretation = rangeFandM.interpret(value, lowConv, highConv);
 
             labTests.addTestResult("Creatinine", value, si,
                     "mg/dL", "µmol/L",
@@ -205,7 +220,8 @@ public class LabTestMenuSystem {
                 lowSI = 0.15; highSI = 0.35;
             }
 
-            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
+            // ✅ FIX
+            String interpretation = rangeFandM.interpret(value, lowConv, highConv);
 
             labTests.addTestResult("Uric Acid", value, si,
                     "mg/dL", "mmol/L",
@@ -222,7 +238,8 @@ public class LabTestMenuSystem {
             double lowConv = 6.0, highConv = 20.0;
             double lowSI = 2.14, highSI = 7.14;
 
-            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
+            // ✅ FIX
+            String interpretation = rangeFandM.interpret(value, lowConv, highConv);
 
             labTests.addTestResult("BUN", value, si,
                     "mg/dL", "mmol/L",
@@ -239,7 +256,8 @@ public class LabTestMenuSystem {
             double lowConv = 0, highConv = 46;
             double lowSI = 0, highSI = 0.78;
 
-            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
+            // ✅ FIX
+            String interpretation = rangeFandM.interpret(value, lowConv, highConv);
 
             labTests.addTestResult("AST", value, si,
                     "U/L", "µkat/L",
@@ -256,7 +274,8 @@ public class LabTestMenuSystem {
             double lowConv = 0, highConv = 49;
             double lowSI = 0, highSI = 0.83;
 
-            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
+            // ✅ FIX
+            String interpretation = rangeFandM.interpret(value, lowConv, highConv);
 
             labTests.addTestResult("ALT", value, si,
                     "U/L", "µkat/L",
@@ -272,7 +291,8 @@ public class LabTestMenuSystem {
             double lowConv = 135, highConv = 145;
             double lowSI = 135, highSI = 145;
 
-            String interpretation = rangeFandM.interpret(value, lowSI, highSI);
+            // ✅ FIX
+            String interpretation = rangeFandM.interpret(value, lowConv, highConv);
 
             labTests.addTestResult("Sodium", value, value,
                     "mEq/L", "mmol/L",
@@ -288,7 +308,8 @@ public class LabTestMenuSystem {
             double lowConv = 3.5, highConv = 5.0;
             double lowSI = 3.5, highSI = 5.0;
 
-            String interpretation = rangeFandM.interpret(value, lowSI, highSI);
+            // ✅ FIX
+            String interpretation = rangeFandM.interpret(value, lowConv, highConv);
 
             labTests.addTestResult("Potassium", value, value,
                     "mEq/L", "mmol/L",
@@ -304,7 +325,8 @@ public class LabTestMenuSystem {
             double lowConv = 96, highConv = 110;
             double lowSI = 96, highSI = 110;
 
-            String interpretation = rangeFandM.interpret(value, lowSI, highSI);
+            // ✅ FIX
+            String interpretation = rangeFandM.interpret(value, lowConv, highConv);
 
             labTests.addTestResult("Chloride", value, value,
                     "mEq/L", "mmol/L",
@@ -321,7 +343,8 @@ public class LabTestMenuSystem {
             double lowConv = 8.6, highConv = 10.28;
             double lowSI = 2.15, highSI = 2.57;
 
-            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
+            // ✅ FIX
+            String interpretation = rangeFandM.interpret(value, lowConv, highConv);
 
             labTests.addTestResult("Total Calcium", value, si,
                     "mg/dL", "mmol/L",
@@ -338,7 +361,8 @@ public class LabTestMenuSystem {
             double lowConv = 4.4, highConv = 5.2;
             double lowSI = 1.10, highSI = 1.30;
 
-            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
+            // ✅ FIX
+            String interpretation = rangeFandM.interpret(value, lowConv, highConv);
 
             labTests.addTestResult("Ionized Calcium", value, si,
                     "mg/dL", "mmol/L",
@@ -349,10 +373,6 @@ public class LabTestMenuSystem {
 
         else if (choice == 17) {
             labTests.displayResults();
-        }
-
-        else if (choice == 18) {
-            System.out.println("Exiting Lab Menu...");
         }
 
         else {
