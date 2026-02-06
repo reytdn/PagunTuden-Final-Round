@@ -5,20 +5,23 @@ public class SelectedLabTests {
     private ArrayList<String> chosenTests = new ArrayList<>();
 
     public void addTestResult(String testName,
-                              double conventional,
-                              double siValue,
-                              String unitConv,
-                              String unitSI,
-                              double lowRef,
-                              double highRef,
-                              String interpretation) {
+                            double conventional,
+                            double siValue,
+                            String unitConv,
+                            String unitSI,
+                            double lowConv,
+                            double highConv,
+                            double lowSI,
+                            double highSI,
+                            String interpretation) {
 
         chosenTests.add(
                 testName +
-                "\n   Conventional: " + conventional + " " + unitConv +
-                "\n   SI Units:     " + String.format("%.2f", siValue) + " " + unitSI +
-                "\n   Ref Range:    " + lowRef + " - " + highRef + " " + unitSI +
-                "\n   Result:       " + interpretation +
+                "\n   Conventional: " + String.format("%.2f", conventional) + " " + unitConv +
+                "\n   Conv Ref Range: " + lowConv + " - " + highConv + " " + unitConv +
+                "\n   SI Units: " + String.format("%.2f", siValue) + " " + unitSI +
+                "\n   SI Ref Range: " + lowSI + " - " + highSI + " " + unitSI +
+                "\n   Result: " + interpretation +
                 "\n"
         );
     }

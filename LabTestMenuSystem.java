@@ -16,10 +16,8 @@ public class LabTestMenuSystem {
         int choice = 0;
 
         while (choice != 18) {
-
             displayMenu();
             choice = input.nextInt();
-
             processChoice(choice, input);
         }
 
@@ -47,260 +45,306 @@ public class LabTestMenuSystem {
         System.out.println("16 - Ionized Calcium Test");
         System.out.println("17 - Process Result");
         System.out.println("18 - Exit");
-        System.out.println();
-
         System.out.print("Choose Test: ");
     }
 
     private void processChoice(int choice, Scanner input) {
 
-        if (choice == 1) {
+        if (choice == 1) { // FBS
             System.out.print("Enter FBS Value (mg/dL): ");
             double value = input.nextDouble();
-
             double si = CONVENTIONALtoSI.glucoseToSI(value);
 
-            double low = 3.9;
-            double high = 5.6;
+            double lowConv = 74, highConv = 100;
+            double lowSI = 4.07, highSI = 5.5;
 
-            String interpretation = rangeFandM.interpret(si, low, high);
+            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
 
-            labTests.addTestResult("FBS", value, si, "mg/dL", "mmol/L", low, high, interpretation);
+            labTests.addTestResult("FBS", value, si,
+                    "mg/dL", "mmol/L",
+                    lowConv, highConv,
+                    lowSI, highSI,
+                    interpretation);
         }
 
-        else if (choice == 2) {
+        else if (choice == 2) { // RBS
             System.out.print("Enter RBS Value (mg/dL): ");
             double value = input.nextDouble();
-
             double si = CONVENTIONALtoSI.glucoseToSI(value);
 
-            double low = 3.9;
-            double high = 7.8;
+            double lowConv = 74, highConv = 140;
+            double lowSI = 4.07, highSI = 7.8;
 
-            String interpretation = rangeFandM.interpret(si, low, high);
+            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
 
-            labTests.addTestResult("RBS", value, si, "mg/dL", "mmol/L", low, high, interpretation);
+            labTests.addTestResult("RBS", value, si,
+                    "mg/dL", "mmol/L",
+                    lowConv, highConv,
+                    lowSI, highSI,
+                    interpretation);
         }
 
-        else if (choice == 3) {
+        else if (choice == 3) { // Total Cholesterol
             System.out.print("Enter Total Cholesterol Value (mg/dL): ");
             double value = input.nextDouble();
-
             double si = CONVENTIONALtoSI.cholesterolToSI(value);
 
-            double low = 0.0;
-            double high = 5.2;
+            double lowConv = 150, highConv = 200;
+            double lowSI = 3.9, highSI = 5.72;
 
-            String interpretation = rangeFandM.interpret(si, low, high);
+            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
 
-            labTests.addTestResult("Total Cholesterol", value, si, "mg/dL", "mmol/L", low, high, interpretation);
+            labTests.addTestResult("Total Cholesterol", value, si,
+                    "mg/dL", "mmol/L",
+                    lowConv, highConv,
+                    lowSI, highSI,
+                    interpretation);
         }
 
-        else if (choice == 4) {
+        else if (choice == 4) { // HDL
             System.out.print("Enter HDL Value (mg/dL): ");
             double value = input.nextDouble();
-
             double si = CONVENTIONALtoSI.hdlToSI(value);
 
-            double low, high;
+            double lowConv, highConv, lowSI, highSI;
 
             if (sex.equals("M")) {
-                low = 0.91;
-                high = 2.08;
+                lowConv = 35; highConv = 80;
+                lowSI = 0.91; highSI = 2.08;
             } else {
-                low = 1.09;
-                high = 2.29;
+                lowConv = 42; highConv = 88;
+                lowSI = 1.09; highSI = 2.29;
             }
 
-            String interpretation = rangeFandM.interpret(si, low, high);
+            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
 
-            labTests.addTestResult("HDL", value, si, "mg/dL", "mmol/L", low, high, interpretation);
+            labTests.addTestResult("HDL", value, si,
+                    "mg/dL", "mmol/L",
+                    lowConv, highConv,
+                    lowSI, highSI,
+                    interpretation);
         }
 
-        else if (choice == 5) {
+        else if (choice == 5) { // LDL
             System.out.print("Enter LDL Value (mg/dL): ");
             double value = input.nextDouble();
-
             double si = CONVENTIONALtoSI.ldlToSI(value);
 
-            double low = 1.30;
-            double high = 3.38;
+            double lowConv = 50, highConv = 130;
+            double lowSI = 1.3, highSI = 3.38;
 
-            String interpretation = rangeFandM.interpret(si, low, high);
+            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
 
-            labTests.addTestResult("LDL", value, si, "mg/dL", "mmol/L", low, high, interpretation);
+            labTests.addTestResult("LDL", value, si,
+                    "mg/dL", "mmol/L",
+                    lowConv, highConv,
+                    lowSI, highSI,
+                    interpretation);
         }
 
-        else if (choice == 6) {
+        else if (choice == 6) { // Triglycerides
             System.out.print("Enter Triglycerides Value (mg/dL): ");
             double value = input.nextDouble();
-
             double si = CONVENTIONALtoSI.triglyceridesToSI(value);
 
-            double low, high;
+            double lowConv, highConv, lowSI, highSI;
 
             if (sex.equals("M")) {
-                low = 0.68;
-                high = 1.88;
+                lowConv = 60; highConv = 165;
+                lowSI = 0.68; highSI = 1.88;
             } else {
-                low = 0.46;
-                high = 1.60;
+                lowConv = 40; highConv = 140;
+                lowSI = 0.46; highSI = 1.6;
             }
 
-            String interpretation = rangeFandM.interpret(si, low, high);
+            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
 
-            labTests.addTestResult("Triglycerides", value, si, "mg/dL", "mmol/L", low, high, interpretation);
+            labTests.addTestResult("Triglycerides", value, si,
+                    "mg/dL", "mmol/L",
+                    lowConv, highConv,
+                    lowSI, highSI,
+                    interpretation);
         }
 
-        else if (choice == 7) {
+        else if (choice == 7) { // Creatinine
             System.out.print("Enter Creatinine Value (mg/dL): ");
             double value = input.nextDouble();
-
             double si = CONVENTIONALtoSI.creatinineToSI(value);
 
-            double low, high;
+            double lowConv, highConv, lowSI, highSI;
 
             if (sex.equals("M")) {
-                low = 79.6;
-                high = 114.9;
+                lowConv = 0.9; highConv = 1.3;
+                lowSI = 79.6; highSI = 114.9;
             } else {
-                low = 53.04;
-                high = 106.08;
+                lowConv = 0.6; highConv = 1.2;
+                lowSI = 53.04; highSI = 106.08;
             }
 
-            String interpretation = rangeFandM.interpret(si, low, high);
+            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
 
-            labTests.addTestResult("Creatinine", value, si, "mg/dL", "µmol/L", low, high, interpretation);
+            labTests.addTestResult("Creatinine", value, si,
+                    "mg/dL", "µmol/L",
+                    lowConv, highConv,
+                    lowSI, highSI,
+                    interpretation);
         }
 
-        else if (choice == 8) {
+        else if (choice == 8) { // Uric Acid
             System.out.print("Enter Uric Acid Value (mg/dL): ");
             double value = input.nextDouble();
-
             double si = CONVENTIONALtoSI.uricAcidToSI(value);
 
-            double low, high;
+            double lowConv, highConv, lowSI, highSI;
 
             if (sex.equals("M")) {
-                low = 0.21;
-                high = 0.42;
+                lowConv = 3.5; highConv = 7.2;
+                lowSI = 0.21; highSI = 0.42;
             } else {
-                low = 0.15;
-                high = 0.35;
+                lowConv = 2.6; highConv = 6.0;
+                lowSI = 0.15; highSI = 0.35;
             }
 
-            String interpretation = rangeFandM.interpret(si, low, high);
+            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
 
-            labTests.addTestResult("Uric Acid", value, si, "mg/dL", "mmol/L", low, high, interpretation);
+            labTests.addTestResult("Uric Acid", value, si,
+                    "mg/dL", "mmol/L",
+                    lowConv, highConv,
+                    lowSI, highSI,
+                    interpretation);
         }
 
-        else if (choice == 9) {
+        else if (choice == 9) { // BUN
             System.out.print("Enter BUN Value (mg/dL): ");
             double value = input.nextDouble();
-
             double si = CONVENTIONALtoSI.bunToSI(value);
 
-            double low = 2.5;
-            double high = 7.1;
+            double lowConv = 6.0, highConv = 20.0;
+            double lowSI = 2.14, highSI = 7.14;
 
-            String interpretation = rangeFandM.interpret(si, low, high);
+            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
 
-            labTests.addTestResult("BUN", value, si, "mg/dL", "mmol/L", low, high, interpretation);
+            labTests.addTestResult("BUN", value, si,
+                    "mg/dL", "mmol/L",
+                    lowConv, highConv,
+                    lowSI, highSI,
+                    interpretation);
         }
 
-        else if (choice == 10) {
-            System.out.print("Enter AST/SGOT Value (U/L): ");
+        else if (choice == 10) { // AST
+            System.out.print("Enter AST Value (U/L): ");
             double value = input.nextDouble();
-
             double si = CONVENTIONALtoSI.enzymeToSI(value);
 
-            double low = 0.17;
-            double high = 0.67;
+            double lowConv = 0, highConv = 46;
+            double lowSI = 0, highSI = 0.78;
 
-            String interpretation = rangeFandM.interpret(si, low, high);
+            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
 
-            labTests.addTestResult("AST/SGOT", value, si, "U/L", "µkat/L", low, high, interpretation);
+            labTests.addTestResult("AST", value, si,
+                    "U/L", "µkat/L",
+                    lowConv, highConv,
+                    lowSI, highSI,
+                    interpretation);
         }
 
-        else if (choice == 11) {
-            System.out.print("Enter ALT/SGPT Value (U/L): ");
+        else if (choice == 11) { // ALT
+            System.out.print("Enter ALT Value (U/L): ");
             double value = input.nextDouble();
-
             double si = CONVENTIONALtoSI.enzymeToSI(value);
-            double low = 0.12;
-            double high = 0.77;
 
-            String interpretation = rangeFandM.interpret(si, low, high);
+            double lowConv = 0, highConv = 49;
+            double lowSI = 0, highSI = 0.83;
 
-            labTests.addTestResult("ALT/SGPT", value, si, "U/L", "µkat/L", low, high, interpretation);
+            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
+
+            labTests.addTestResult("ALT", value, si,
+                    "U/L", "µkat/L",
+                    lowConv, highConv,
+                    lowSI, highSI,
+                    interpretation);
         }
 
-        else if (choice == 12) {
+        else if (choice == 12) { // Sodium
             System.out.print("Enter Sodium Value (mEq/L): ");
             double value = input.nextDouble();
 
-            double si = CONVENTIONALtoSI.electrolyteToSI(value);
+            double lowConv = 135, highConv = 145;
+            double lowSI = 135, highSI = 145;
 
-            double low = 135;
-            double high = 145;
+            String interpretation = rangeFandM.interpret(value, lowSI, highSI);
 
-            String interpretation = rangeFandM.interpret(si, low, high);
-
-            labTests.addTestResult("Sodium", value, si, "mEq/L", "mmol/L", low, high, interpretation);
+            labTests.addTestResult("Sodium", value, value,
+                    "mEq/L", "mmol/L",
+                    lowConv, highConv,
+                    lowSI, highSI,
+                    interpretation);
         }
 
-        else if (choice == 13) {
+        else if (choice == 13) { // Potassium
             System.out.print("Enter Potassium Value (mEq/L): ");
             double value = input.nextDouble();
 
-            double si = CONVENTIONALtoSI.electrolyteToSI(value);
+            double lowConv = 3.5, highConv = 5.0;
+            double lowSI = 3.5, highSI = 5.0;
 
-            double low = 3.5;
-            double high = 5.1;
+            String interpretation = rangeFandM.interpret(value, lowSI, highSI);
 
-            String interpretation = rangeFandM.interpret(si, low, high);
-
-            labTests.addTestResult("Potassium", value, si, "mEq/L", "mmol/L", low, high, interpretation);
+            labTests.addTestResult("Potassium", value, value,
+                    "mEq/L", "mmol/L",
+                    lowConv, highConv,
+                    lowSI, highSI,
+                    interpretation);
         }
 
-        else if (choice == 14) {
+        else if (choice == 14) { // Chloride
             System.out.print("Enter Chloride Value (mEq/L): ");
             double value = input.nextDouble();
 
-            double si = CONVENTIONALtoSI.electrolyteToSI(value);
+            double lowConv = 96, highConv = 110;
+            double lowSI = 96, highSI = 110;
 
-            double low = 98;
-            double high = 107;
+            String interpretation = rangeFandM.interpret(value, lowSI, highSI);
 
-            String interpretation = rangeFandM.interpret(si, low, high);
-
-            labTests.addTestResult("Chloride", value, si, "mEq/L", "mmol/L", low, high, interpretation);
+            labTests.addTestResult("Chloride", value, value,
+                    "mEq/L", "mmol/L",
+                    lowConv, highConv,
+                    lowSI, highSI,
+                    interpretation);
         }
 
-        else if (choice == 15) {
+        else if (choice == 15) { // Total Calcium
             System.out.print("Enter Total Calcium Value (mg/dL): ");
             double value = input.nextDouble();
-
             double si = CONVENTIONALtoSI.totalCalciumToSI(value);
 
-            double low = 2.10;
-            double high = 2.55;
+            double lowConv = 8.6, highConv = 10.28;
+            double lowSI = 2.15, highSI = 2.57;
 
-            String interpretation = rangeFandM.interpret(si, low, high);
+            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
 
-            labTests.addTestResult("Total Calcium", value, si, "mg/dL", "mmol/L", low, high, interpretation);
+            labTests.addTestResult("Total Calcium", value, si,
+                    "mg/dL", "mmol/L",
+                    lowConv, highConv,
+                    lowSI, highSI,
+                    interpretation);
         }
-        else if (choice == 16) {
+
+        else if (choice == 16) { // Ionized Calcium
             System.out.print("Enter Ionized Calcium Value (mg/dL): ");
             double value = input.nextDouble();
-
             double si = CONVENTIONALtoSI.ionizedCalciumToSI(value);
-            double low = 1.12;
-            double high = 1.32;
 
-            String interpretation = rangeFandM.interpret(si, low, high);
+            double lowConv = 4.4, highConv = 5.2;
+            double lowSI = 1.10, highSI = 1.30;
 
-            labTests.addTestResult("Ionized Calcium", value, si, "mg/dL", "mmol/L", low, high, interpretation);
+            String interpretation = rangeFandM.interpret(si, lowSI, highSI);
+
+            labTests.addTestResult("Ionized Calcium", value, si,
+                    "mg/dL", "mmol/L",
+                    lowConv, highConv,
+                    lowSI, highSI,
+                    interpretation);
         }
 
         else if (choice == 17) {
