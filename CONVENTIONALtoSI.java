@@ -41,10 +41,10 @@ public class CONVENTIONALtoSI {
     }
 
     public static double totalCalciumToSI(double value) {
-        return value * 0.25;
+        return value * 0.2495;
     }
 
     public static double ionizedCalciumToSI(double value) {
-        return value * 0.25;
+        return value * 0.2495;
     }
 }

@@ -3,9 +3,11 @@ import java.util.Scanner;
 public class LabTestMenuSystem {
 
     private SelectedLabTests labTests;
+    private String sex;
 
-    public LabTestMenuSystem() {
+    public LabTestMenuSystem(String sex) {
         labTests = new SelectedLabTests();
+        this.sex = sex.toUpperCase();
     }
 
     public void startLabMenu() {
@@ -13,7 +15,7 @@ public class LabTestMenuSystem {
         Scanner input = new Scanner(System.in);
         int choice = 0;
 
-        while (choice != 18) {  
+        while (choice != 18) {
 
             displayMenu();
             choice = input.nextInt();
@@ -45,6 +47,7 @@ public class LabTestMenuSystem {
         System.out.println("16 - Ionized Calcium Test");
         System.out.println("17 - Process Result");
         System.out.println("18 - Exit");
+        System.out.println();
 
         System.out.print("Choose Test: ");
     }
@@ -56,7 +59,13 @@ public class LabTestMenuSystem {
             double value = input.nextDouble();
 
             double si = CONVENTIONALtoSI.glucoseToSI(value);
-            labTests.addTestResult("FBS", value, si, "mg/dL", "mmol/L");
+
+            double low = 3.9;
+            double high = 5.6;
+
+            String interpretation = rangeFandM.interpret(si, low, high);
+
+            labTests.addTestResult("FBS", value, si, "mg/dL", "mmol/L", low, high, interpretation);
         }
 
         else if (choice == 2) {
@@ -64,7 +73,13 @@ public class LabTestMenuSystem {
             double value = input.nextDouble();
 
             double si = CONVENTIONALtoSI.glucoseToSI(value);
-            labTests.addTestResult("RBS", value, si, "mg/dL", "mmol/L");
+
+            double low = 3.9;
+            double high = 7.8;
+
+            String interpretation = rangeFandM.interpret(si, low, high);
+
+            labTests.addTestResult("RBS", value, si, "mg/dL", "mmol/L", low, high, interpretation);
         }
 
         else if (choice == 3) {
@@ -72,7 +87,13 @@ public class LabTestMenuSystem {
             double value = input.nextDouble();
 
             double si = CONVENTIONALtoSI.cholesterolToSI(value);
-            labTests.addTestResult("Total Cholesterol", value, si, "mg/dL", "mmol/L");
+
+            double low = 0.0;
+            double high = 5.2;
+
+            String interpretation = rangeFandM.interpret(si, low, high);
+
+            labTests.addTestResult("Total Cholesterol", value, si, "mg/dL", "mmol/L", low, high, interpretation);
         }
 
         else if (choice == 4) {
@@ -80,7 +101,20 @@ public class LabTestMenuSystem {
             double value = input.nextDouble();
 
             double si = CONVENTIONALtoSI.hdlToSI(value);
-            labTests.addTestResult("HDL", value, si, "mg/dL", "mmol/L");
+
+            double low, high;
+
+            if (sex.equals("M")) {
+                low = 0.91;
+                high = 2.08;
+            } else {
+                low = 1.09;
+                high = 2.29;
+            }
+
+            String interpretation = rangeFandM.interpret(si, low, high);
+
+            labTests.addTestResult("HDL", value, si, "mg/dL", "mmol/L", low, high, interpretation);
         }
 
         else if (choice == 5) {
@@ -88,7 +122,13 @@ public class LabTestMenuSystem {
             double value = input.nextDouble();
 
             double si = CONVENTIONALtoSI.ldlToSI(value);
-            labTests.addTestResult("LDL", value, si, "mg/dL", "mmol/L");
+
+            double low = 1.30;
+            double high = 3.38;
+
+            String interpretation = rangeFandM.interpret(si, low, high);
+
+            labTests.addTestResult("LDL", value, si, "mg/dL", "mmol/L", low, high, interpretation);
         }
 
         else if (choice == 6) {
@@ -96,7 +136,20 @@ public class LabTestMenuSystem {
             double value = input.nextDouble();
 
             double si = CONVENTIONALtoSI.triglyceridesToSI(value);
-            labTests.addTestResult("Triglycerides", value, si, "mg/dL", "mmol/L");
+
+            double low, high;
+
+            if (sex.equals("M")) {
+                low = 0.68;
+                high = 1.88;
+            } else {
+                low = 0.46;
+                high = 1.60;
+            }
+
+            String interpretation = rangeFandM.interpret(si, low, high);
+
+            labTests.addTestResult("Triglycerides", value, si, "mg/dL", "mmol/L", low, high, interpretation);
         }
 
         else if (choice == 7) {
@@ -104,7 +157,20 @@ public class LabTestMenuSystem {
             double value = input.nextDouble();
 
             double si = CONVENTIONALtoSI.creatinineToSI(value);
-            labTests.addTestResult("Creatinine", value, si, "mg/dL", "µmol/L");
+
+            double low, high;
+
+            if (sex.equals("M")) {
+                low = 79.6;
+                high = 114.9;
+            } else {
+                low = 53.04;
+                high = 106.08;
+            }
+
+            String interpretation = rangeFandM.interpret(si, low, high);
+
+            labTests.addTestResult("Creatinine", value, si, "mg/dL", "µmol/L", low, high, interpretation);
         }
 
         else if (choice == 8) {
@@ -112,7 +178,20 @@ public class LabTestMenuSystem {
             double value = input.nextDouble();
 
             double si = CONVENTIONALtoSI.uricAcidToSI(value);
-            labTests.addTestResult("Uric Acid", value, si, "mg/dL", "mmol/L");
+
+            double low, high;
+
+            if (sex.equals("M")) {
+                low = 0.21;
+                high = 0.42;
+            } else {
+                low = 0.15;
+                high = 0.35;
+            }
+
+            String interpretation = rangeFandM.interpret(si, low, high);
+
+            labTests.addTestResult("Uric Acid", value, si, "mg/dL", "mmol/L", low, high, interpretation);
         }
 
         else if (choice == 9) {
@@ -120,7 +199,13 @@ public class LabTestMenuSystem {
             double value = input.nextDouble();
 
             double si = CONVENTIONALtoSI.bunToSI(value);
-            labTests.addTestResult("BUN", value, si, "mg/dL", "mmol/L");
+
+            double low = 2.5;
+            double high = 7.1;
+
+            String interpretation = rangeFandM.interpret(si, low, high);
+
+            labTests.addTestResult("BUN", value, si, "mg/dL", "mmol/L", low, high, interpretation);
         }
 
         else if (choice == 10) {
@@ -128,7 +213,13 @@ public class LabTestMenuSystem {
             double value = input.nextDouble();
 
             double si = CONVENTIONALtoSI.enzymeToSI(value);
-            labTests.addTestResult("AST/SGOT", value, si, "U/L", "µkat/L");
+
+            double low = 0.17;
+            double high = 0.67;
+
+            String interpretation = rangeFandM.interpret(si, low, high);
+
+            labTests.addTestResult("AST/SGOT", value, si, "U/L", "µkat/L", low, high, interpretation);
         }
 
         else if (choice == 11) {
@@ -136,7 +227,12 @@ public class LabTestMenuSystem {
             double value = input.nextDouble();
 
             double si = CONVENTIONALtoSI.enzymeToSI(value);
-            labTests.addTestResult("ALT/SGPT", value, si, "U/L", "µkat/L");
+            double low = 0.12;
+            double high = 0.77;
+
+            String interpretation = rangeFandM.interpret(si, low, high);
+
+            labTests.addTestResult("ALT/SGPT", value, si, "U/L", "µkat/L", low, high, interpretation);
         }
 
         else if (choice == 12) {
@@ -144,7 +240,13 @@ public class LabTestMenuSystem {
             double value = input.nextDouble();
 
             double si = CONVENTIONALtoSI.electrolyteToSI(value);
-            labTests.addTestResult("Sodium", value, si, "mEq/L", "mmol/L");
+
+            double low = 135;
+            double high = 145;
+
+            String interpretation = rangeFandM.interpret(si, low, high);
+
+            labTests.addTestResult("Sodium", value, si, "mEq/L", "mmol/L", low, high, interpretation);
         }
 
         else if (choice == 13) {
@@ -152,7 +254,13 @@ public class LabTestMenuSystem {
             double value = input.nextDouble();
 
             double si = CONVENTIONALtoSI.electrolyteToSI(value);
-            labTests.addTestResult("Potassium", value, si, "mEq/L", "mmol/L");
+
+            double low = 3.5;
+            double high = 5.1;
+
+            String interpretation = rangeFandM.interpret(si, low, high);
+
+            labTests.addTestResult("Potassium", value, si, "mEq/L", "mmol/L", low, high, interpretation);
         }
 
         else if (choice == 14) {
@@ -160,7 +268,13 @@ public class LabTestMenuSystem {
             double value = input.nextDouble();
 
             double si = CONVENTIONALtoSI.electrolyteToSI(value);
-            labTests.addTestResult("Chloride", value, si, "mEq/L", "mmol/L");
+
+            double low = 98;
+            double high = 107;
+
+            String interpretation = rangeFandM.interpret(si, low, high);
+
+            labTests.addTestResult("Chloride", value, si, "mEq/L", "mmol/L", low, high, interpretation);
         }
 
         else if (choice == 15) {
@@ -168,15 +282,25 @@ public class LabTestMenuSystem {
             double value = input.nextDouble();
 
             double si = CONVENTIONALtoSI.totalCalciumToSI(value);
-            labTests.addTestResult("Total Calcium", value, si, "mg/dL", "mmol/L");
-        }
 
+            double low = 2.10;
+            double high = 2.55;
+
+            String interpretation = rangeFandM.interpret(si, low, high);
+
+            labTests.addTestResult("Total Calcium", value, si, "mg/dL", "mmol/L", low, high, interpretation);
+        }
         else if (choice == 16) {
             System.out.print("Enter Ionized Calcium Value (mg/dL): ");
             double value = input.nextDouble();
 
             double si = CONVENTIONALtoSI.ionizedCalciumToSI(value);
-            labTests.addTestResult("Ionized Calcium", value, si, "mg/dL", "mmol/L");
+            double low = 1.12;
+            double high = 1.32;
+
+            String interpretation = rangeFandM.interpret(si, low, high);
+
+            labTests.addTestResult("Ionized Calcium", value, si, "mg/dL", "mmol/L", low, high, interpretation);
         }
 
         else if (choice == 17) {

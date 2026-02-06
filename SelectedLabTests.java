@@ -4,12 +4,21 @@ public class SelectedLabTests {
 
     private ArrayList<String> chosenTests = new ArrayList<>();
 
-    public void addTestResult(String testName, double conventional, double siValue, String unitConv, String unitSI) {
+    public void addTestResult(String testName,
+                              double conventional,
+                              double siValue,
+                              String unitConv,
+                              String unitSI,
+                              double lowRef,
+                              double highRef,
+                              String interpretation) {
 
         chosenTests.add(
                 testName +
                 "\n   Conventional: " + conventional + " " + unitConv +
-                "\n   SI Units:      " + String.format("%.2f", siValue) + " " + unitSI +
+                "\n   SI Units:     " + String.format("%.2f", siValue) + " " + unitSI +
+                "\n   Ref Range:    " + lowRef + " - " + highRef + " " + unitSI +
+                "\n   Result:       " + interpretation +
                 "\n"
         );
     }
@@ -20,8 +29,7 @@ public class SelectedLabTests {
 
         if (chosenTests.isEmpty()) {
             System.out.println("No tests were selected.");
-        }
-        else {
+        } else {
             for (String test : chosenTests) {
                 System.out.println(test);
             }

@@ -47,7 +47,7 @@
             System.out.println("\n===== PATIENT INFORMATION =====");
             System.out.println(demoinfo);
 
-            LabTestMenuSystem menu = new LabTestMenuSystem();
+            LabTestMenuSystem menu = new LabTestMenuSystem(sex);
             menu.startLabMenu();
 
             input.close();
