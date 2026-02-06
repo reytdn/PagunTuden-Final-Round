@@ -174,7 +174,7 @@ public class LabTestMenuSystem {
             double lowConv, highConv, lowSI, highSI;
 
             if (sex.equals("M")) {
-                lowConv = 0.9; highConv = 1.3;
+                lowConv = 0.9; highConv = 1.31;
                 lowSI = 79.6; highSI = 114.9;
             } else {
                 lowConv = 0.6; highConv = 1.2;
