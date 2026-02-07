@@ -40,7 +40,6 @@ public class PagunTudenClinicAppGUI extends JFrame {
         JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        // Patient Panel
         JPanel patientPanel = new JPanel(new GridLayout(8, 2, 8, 8));
         patientPanel.setBorder(BorderFactory.createTitledBorder("Patient Information"));
 
@@ -77,7 +76,6 @@ public class PagunTudenClinicAppGUI extends JFrame {
         patientPanel.add(new JLabel("City:"));
         patientPanel.add(cityField);
 
-        // Request Panel
         JPanel requestPanel = new JPanel(new GridLayout(4, 2, 8, 8));
         requestPanel.setBorder(BorderFactory.createTitledBorder("Request Details"));
 
@@ -97,11 +95,11 @@ public class PagunTudenClinicAppGUI extends JFrame {
         requestPanel.add(new JLabel("Date & Time Collected:"));
         requestPanel.add(new JLabel(dateCollection + " " + timeCollection));
 
-        // Lab Panel
         JPanel labPanel = new JPanel(new BorderLayout());
         labPanel.setBorder(BorderFactory.createTitledBorder("Laboratory Tests (Enter Value Per Test)"));
 
         tableModel = new DefaultTableModel(new Object[]{"Test Name", "Conventional Value"}, 0);
+
         String[] tests = {
                 "FBS", "RBS", "Total Cholesterol", "HDL", "LDL",
                 "Triglycerides", "Creatinine", "Uric Acid",
@@ -109,13 +107,12 @@ public class PagunTudenClinicAppGUI extends JFrame {
                 "Potassium", "Chloride",
                 "Total Calcium", "Ionized Calcium"
         };
+
         for (String test : tests) {
             tableModel.addRow(new Object[]{test, ""});
         }
 
         testTable = new JTable(tableModel);
-        testTable.getColumnModel().getColumn(0).setPreferredWidth(250);
-        testTable.getColumnModel().getColumn(1).setPreferredWidth(500);
         testTable.setRowHeight(30);
 
         JScrollPane tableScroll = new JScrollPane(testTable);
@@ -174,85 +171,174 @@ public class PagunTudenClinicAppGUI extends JFrame {
 
             try {
                 double value = Double.parseDouble(valueText);
+
                 double si = 0;
                 double lowConv = 0, highConv = 0;
                 double lowSI = 0, highSI = 0;
+
                 String unitConv = "", unitSI = "";
                 String status = "";
 
-                switch (testName) {
-                    case "FBS" -> {
-                        si = value / 18.0; lowConv = 74; highConv = 100; lowSI = 4.07; highSI = 5.5;
-                        unitConv = "mg/dL"; unitSI = "mmol/L";
-                        status = interpretRange(value, lowConv, highConv);
+                if (testName.equals("FBS")) {
+                    si = value / 18.0;
+                    lowConv = 74; highConv = 100;
+                    lowSI = 4.07; highSI = 5.5;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("RBS")) {
+                    si = value / 18.0;
+                    lowConv = 70; highConv = 139;
+                    lowSI = 3.9; highSI = 7.7;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("Total Cholesterol")) {
+                    si = value / 38.67;
+                    lowConv = 150; highConv = 200;
+                    lowSI = 3.9; highSI = 5.72;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("HDL")) {
+                    si = value / 38.67;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+
+                    if (sex.equals("M")) {
+                        lowConv = 35; highConv = 80;
+                        lowSI = 0.91; highSI = 2.08;
+                    } else {
+                        lowConv = 42; highConv = 88;
+                        lowSI = 1.09; highSI = 2.29;
                     }
-                    case "RBS" -> {
-                        si = value / 18.0; lowConv = 70; highConv = 139; lowSI = 3.9; highSI = 7.7;
-                        unitConv = "mg/dL"; unitSI = "mmol/L";
-                        status = interpretRange(value, lowConv, highConv);
+
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("LDL")) {
+                    si = value / 38.67;
+                    lowConv = 50; highConv = 130;
+                    lowSI = 1.3; highSI = 3.38;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("Triglycerides")) {
+                    si = value / 88.57;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+
+                    if (sex.equals("M")) {
+                        lowConv = 60; highConv = 165;
+                        lowSI = 0.68; highSI = 1.88;
+                    } else {
+                        lowConv = 40; highConv = 140;
+                        lowSI = 0.46; highSI = 1.6;
                     }
-                    case "Total Cholesterol" -> {
-                        si = value / 38.67; lowConv = 150; highConv = 200; lowSI = 3.9; highSI = 5.72;
-                        unitConv = "mg/dL"; unitSI = "mmol/L";
-                        status = interpretRange(value, lowConv, highConv);
+
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("Creatinine")) {
+                    si = value * 88.4;
+                    unitConv = "mg/dL"; unitSI = "µmol/L";
+
+                    if (sex.equals("M")) {
+                        lowConv = 0.9; highConv = 1.3;
+                        lowSI = 79.6; highSI = 114.9;
+                    } else {
+                        lowConv = 0.6; highConv = 1.2;
+                        lowSI = 53.04; highSI = 106.08;
                     }
-                    case "HDL" -> {
-                        si = value / 38.67; unitConv = "mg/dL"; unitSI = "mmol/L";
-                        if (sex.equals("M")) { lowConv = 35; highConv = 80; lowSI = 0.91; highSI = 2.08; }
-                        else { lowConv = 42; highConv = 88; lowSI = 1.09; highSI = 2.29; }
-                        status = interpretRange(value, lowConv, highConv);
+
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("Uric Acid")) {
+                    si = value / 16.81;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+
+                    if (sex.equals("M")) {
+                        lowConv = 3.5; highConv = 7.2;
+                        lowSI = 0.21; highSI = 0.42;
+                    } else {
+                        lowConv = 2.6; highConv = 6.0;
+                        lowSI = 0.15; highSI = 0.35;
                     }
-                    case "LDL" -> {
-                        si = value / 38.67; lowConv = 50; highConv = 130; lowSI = 1.3; highSI = 3.38;
-                        unitConv = "mg/dL"; unitSI = "mmol/L";
-                        status = interpretRange(value, lowConv, highConv);
-                    }
-                    case "Triglycerides" -> {
-                        si = value / 88.57; unitConv = "mg/dL"; unitSI = "mmol/L";
-                        if (sex.equals("M")) { lowConv = 60; highConv = 165; lowSI = 0.68; highSI = 1.88; }
-                        else { lowConv = 40; highConv = 140; lowSI = 0.46; highSI = 1.6; }
-                        status = interpretRange(value, lowConv, highConv);
-                    }
-                    case "Creatinine" -> {
-                        si = value * 88.4; unitConv = "mg/dL"; unitSI = "µmol/L";
-                        if (sex.equals("M")) { lowConv = 0.9; highConv = 1.3; lowSI = 79.6; highSI = 114.9; }
-                        else { lowConv = 0.6; highConv = 1.2; lowSI = 53.04; highSI = 106.08; }
-                        status = interpretRange(value, lowConv, highConv);
-                    }
-                    case "Uric Acid" -> {
-                        si = value / 16.81; unitConv = "mg/dL"; unitSI = "mmol/L";
-                        if (sex.equals("M")) { lowConv = 3.5; highConv = 7.2; lowSI = 0.21; highSI = 0.42; }
-                        else { lowConv = 2.6; highConv = 6.0; lowSI = 0.15; highSI = 0.35; }
-                        status = interpretRange(value, lowConv, highConv);
-                    }
-                    case "BUN" -> {
-                        si = value / 2.8; lowConv = 6; highConv = 20; lowSI = 2.14; highSI = 7.14;
-                        unitConv = "mg/dL"; unitSI = "mmol/L";
-                        status = interpretRange(value, lowConv, highConv);
-                    }
-                    case "AST" -> {
-                        si = value * 0.0167; highConv = 45; highSI = 0.75;
-                        unitConv = "U/L"; unitSI = "µkat/L";
-                        status = (value > highConv) ? "HIGH" : "NORMAL"; 
-                    }
-                    case "ALT" -> {
-                        si = value * 0.0167; highConv = 48; highSI = 0.80;
-                        unitConv = "U/L"; unitSI = "µkat/L";
-                        status = (value > highConv) ? "HIGH" : "NORMAL";
-                    }
-                    case "Sodium" -> { si = value; lowConv = 135; highConv = 145; lowSI = 135; highSI = 145; unitConv = "mEq/L"; unitSI = "mmol/L"; status = interpretRange(value, lowConv, highConv);}
-                    case "Potassium" -> { si = value; lowConv = 3.5; highConv = 5.0; lowSI = 3.5; highSI = 5.0; unitConv = "mEq/L"; unitSI = "mmol/L"; status = interpretRange(value, lowConv, highConv);}
-                    case "Chloride" -> { si = value; lowConv = 96; highConv = 110; lowSI = 96; highSI = 110; unitConv = "mEq/L"; unitSI = "mmol/L"; status = interpretRange(value, lowConv, highConv);}
-                    case "Total Calcium" -> { si = value / 4.0; lowConv = 8.6; highConv = 10.28; lowSI = 2.15; highSI = 2.57; unitConv = "mg/dL"; unitSI = "mmol/L"; status = interpretRange(value, lowConv, highConv);}
-                    case "Ionized Calcium" -> { si = value / 4.0; lowConv = 4.4; highConv = 5.2; lowSI = 1.10; highSI = 1.30; unitConv = "mg/dL"; unitSI = "mmol/L"; status = interpretRange(value, lowConv, highConv);}
+
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("BUN")) {
+                    si = value / 2.8;
+                    lowConv = 6; highConv = 20;
+                    lowSI = 2.14; highSI = 7.14;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("AST")) {
+                    si = value * 0.0167;
+                    highConv = 45;
+                    unitConv = "U/L"; unitSI = "µkat/L";
+                    status = (value > highConv) ? "HIGH" : "NORMAL";
+                }
+
+                else if (testName.equals("ALT")) {
+                    si = value * 0.0167;
+                    highConv = 48;
+                    unitConv = "U/L"; unitSI = "µkat/L";
+                    status = (value > highConv) ? "HIGH" : "NORMAL";
+                }
+
+                else if (testName.equals("Sodium")) {
+                    si = value;
+                    lowConv = 135; highConv = 145;
+                    lowSI = 135; highSI = 145;
+                    unitConv = "mEq/L"; unitSI = "mmol/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("Potassium")) {
+                    si = value;
+                    lowConv = 3.5; highConv = 5.0;
+                    lowSI = 3.5; highSI = 5.0;
+                    unitConv = "mEq/L"; unitSI = "mmol/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("Chloride")) {
+                    si = value;
+                    lowConv = 96; highConv = 110;
+                    lowSI = 96; highSI = 110;
+                    unitConv = "mEq/L"; unitSI = "mmol/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("Total Calcium")) {
+                    si = value / 4.0;
+                    lowConv = 8.6; highConv = 10.28;
+                    lowSI = 2.15; highSI = 2.57;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("Ionized Calcium")) {
+                    si = value / 4.0;
+                    lowConv = 4.4; highConv = 5.2;
+                    lowSI = 1.10; highSI = 1.30;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+                    status = interpretRange(value, lowConv, highConv);
                 }
 
                 resultArea.append(
                         "Test Name            : " + testName +
                                 "\nValue Entered        : " + value + " " + unitConv +
-                                "\nConventional Range   : " + lowConv + (testName.equals("AST") || testName.equals("ALT") ? "" : " - " + highConv) + " " + unitConv +
+                                "\nConventional Range   : " + lowConv + " - " + highConv + " " + unitConv +
                                 "\nSI Converted Value   : " + String.format("%.2f", si) + " " + unitSI +
-                                (testName.equals("AST") || testName.equals("ALT") ? "" : "\nSI Range             : " + lowSI + " - " + highSI + " " + unitSI) +
+                                "\nSI Range             : " + lowSI + " - " + highSI + " " + unitSI +
                                 "\nStatus               : " + status +
                                 "\n-------------------------------------------------\n\n"
                 );
