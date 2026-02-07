@@ -80,8 +80,8 @@ public class LabTestMenuSystem {
             double value = input.nextDouble();
             double si = CONVENTIONALtoSI.glucoseToSI(value);
 
-            double lowConv = 74, highConv = 140;
-            double lowSI = 4.07, highSI = 7.8;
+            double lowConv = 70, highConv = 139;
+            double lowSI = 3.9, highSI = 7.7;
 
             String interpretation = rangeInterpretation.interpret(value, lowConv, highConv);
 
@@ -182,7 +182,7 @@ public class LabTestMenuSystem {
             double lowConv, highConv, lowSI, highSI;
 
             if (sex.equals("M")) {
-                lowConv = 0.9; highConv = 1.31;
+                lowConv = 0.9; highConv = 1.30;
                 lowSI = 79.6; highSI = 114.9;
             } else {
                 lowConv = 0.6; highConv = 1.2;

@@ -15,7 +15,6 @@ public class PagunTudenClinicAppGUI extends JFrame {
 
     private JComboBox<String> sexBox, mealAmPmBox;
 
-    // ✅ TABLE FOR MULTIPLE TESTS WITH VALUES
     private JTable testTable;
     private DefaultTableModel tableModel;
 
@@ -41,7 +40,6 @@ public class PagunTudenClinicAppGUI extends JFrame {
         JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        // ================= PATIENT PANEL =================
         JPanel patientPanel = new JPanel(new GridLayout(8, 2, 8, 8));
         patientPanel.setBorder(BorderFactory.createTitledBorder("Patient Information"));
 
@@ -78,7 +76,6 @@ public class PagunTudenClinicAppGUI extends JFrame {
         patientPanel.add(new JLabel("City:"));
         patientPanel.add(cityField);
 
-        // ================= REQUEST PANEL =================
         JPanel requestPanel = new JPanel(new GridLayout(4, 2, 8, 8));
         requestPanel.setBorder(BorderFactory.createTitledBorder("Request Details"));
 
@@ -98,16 +95,13 @@ public class PagunTudenClinicAppGUI extends JFrame {
         requestPanel.add(new JLabel("Date & Time Collected:"));
         requestPanel.add(new JLabel(dateCollection + " " + timeCollection));
 
-        // ================= LAB PANEL =================
         JPanel labPanel = new JPanel(new BorderLayout());
         labPanel.setBorder(BorderFactory.createTitledBorder("Laboratory Tests (Enter Value Per Test)"));
 
-        // ✅ TABLE MODEL
         tableModel = new DefaultTableModel(
                 new Object[]{"Test Name", "Conventional Value"}, 0
         );
 
-        // ADD TESTS ROWS
         String[] tests = {
                 "FBS", "RBS", "Total Cholesterol", "HDL", "LDL",
                 "Triglycerides", "Creatinine", "Uric Acid",
@@ -120,20 +114,16 @@ public class PagunTudenClinicAppGUI extends JFrame {
             tableModel.addRow(new Object[]{test, ""});
         }
 
-        // ✅ TABLE
         testTable = new JTable(tableModel);
 
-        // ✅ WIDEN THE VALUE INPUT BOX COLUMN
-        testTable.getColumnModel().getColumn(0).setPreferredWidth(250); // Test Name
-        testTable.getColumnModel().getColumn(1).setPreferredWidth(500); // Value Box Wider
+        testTable.getColumnModel().getColumn(0).setPreferredWidth(250);
+        testTable.getColumnModel().getColumn(1).setPreferredWidth(500);
 
-        // ✅ Bigger Row Height for Easy Typing
         testTable.setRowHeight(30);
 
         JScrollPane tableScroll = new JScrollPane(testTable);
         labPanel.add(tableScroll, BorderLayout.CENTER);
 
-        // ================= RESULT AREA =================
         resultArea = new JTextArea(15, 70);
         resultArea.setEditable(false);
         resultArea.setFont(new Font("Monospaced", Font.PLAIN, 13));
@@ -141,12 +131,10 @@ public class PagunTudenClinicAppGUI extends JFrame {
         JScrollPane scroll = new JScrollPane(resultArea);
         scroll.setBorder(BorderFactory.createTitledBorder("Laboratory Report Output"));
 
-        // ================= BUTTON =================
         JButton processButton = new JButton("PROCESS ALL ENTERED TESTS");
         processButton.setFont(new Font("Arial", Font.BOLD, 14));
         processButton.addActionListener(e -> processMultipleTests());
 
-        // ================= TOP PANEL =================
         JPanel topPanel = new JPanel(new GridLayout(1, 2, 15, 15));
         topPanel.add(patientPanel);
         topPanel.add(requestPanel);
@@ -159,29 +147,27 @@ public class PagunTudenClinicAppGUI extends JFrame {
         add(mainPanel);
     }
 
-    // ================= PROCESS MULTIPLE TESTS =================
     private void processMultipleTests() {
 
         String sex = (String) sexBox.getSelectedItem();
 
         resultArea.setText(
                 "=========== PAGUNTUDEN CLINIC LAB REPORT ===========\n\n" +
-                "Patient ID: " + patientID +
-                "\nName      : " + fnameField.getText() + " " +
-                                mnameField.getText() + " " +
-                                lnameField.getText() +
-                "\nAge       : " + ageField.getText() +
-                "\nSex       : " + sex +
-                "\nAddress   : " + provinceField.getText() + ", " +
-                                cityField.getText() +
-                "\nPhysician : " + physicianField.getText() +
-                "\nLast Meal : " + lastMealField.getText() + " " +
-                                mealAmPmBox.getSelectedItem() +
-                "\nCollected : " + dateCollection + " " + timeCollection +
-                "\n\n=================================================\n\n"
+                        "Patient ID: " + patientID +
+                        "\nName      : " + fnameField.getText() + " " +
+                        mnameField.getText() + " " +
+                        lnameField.getText() +
+                        "\nAge       : " + ageField.getText() +
+                        "\nSex       : " + sex +
+                        "\nAddress   : " + provinceField.getText() + ", " +
+                        cityField.getText() +
+                        "\nPhysician : " + physicianField.getText() +
+                        "\nLast Meal : " + lastMealField.getText() + " " +
+                        mealAmPmBox.getSelectedItem() +
+                        "\nCollected : " + dateCollection + " " + timeCollection +
+                        "\n\n=================================================\n\n"
         );
 
-        // LOOP THROUGH TABLE ROWS
         for (int i = 0; i < tableModel.getRowCount(); i++) {
 
             String testName = tableModel.getValueAt(i, 0).toString();
@@ -193,32 +179,161 @@ public class PagunTudenClinicAppGUI extends JFrame {
                 double value = Double.parseDouble(valueText);
 
                 double si = 0;
-                double low = 0, high = 0;
-                String unitConv = "", unitSI = "";
+                double lowConv = 0, highConv = 0;
+                double lowSI = 0, highSI = 0;
+
+                String unitConv = "";
+                String unitSI = "";
 
                 if (testName.equals("FBS")) {
                     si = value / 18.0;
-                    low = 74; high = 100;
+                    lowConv = 74; highConv = 100;
+                    lowSI = 4.07; highSI = 5.50;
                     unitConv = "mg/dL"; unitSI = "mmol/L";
                 }
+
                 else if (testName.equals("RBS")) {
                     si = value / 18.0;
-                    low = 74; high = 140;
+                    lowConv = 74; highConv = 140;
+                    lowSI = 4.07; highSI = 7.80;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+                }
+
+                else if (testName.equals("Total Cholesterol")) {
+                    si = value / 38.67;
+                    lowConv = 150; highConv = 200;
+                    lowSI = 3.90; highSI = 5.72;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+                }
+
+                else if (testName.equals("HDL")) {
+                    si = value / 38.67;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+
+                    if (sex.equals("M")) {
+                        lowConv = 35; highConv = 80;
+                        lowSI = 0.91; highSI = 2.08;
+                    } else {
+                        lowConv = 42; highConv = 88;
+                        lowSI = 1.09; highSI = 2.29;
+                    }
+                }
+
+                else if (testName.equals("LDL")) {
+                    si = value / 38.67;
+                    lowConv = 50; highConv = 130;
+                    lowSI = 1.30; highSI = 3.38;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+                }
+
+                else if (testName.equals("Triglycerides")) {
+                    si = value / 88.57;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+
+                    if (sex.equals("M")) {
+                        lowConv = 60; highConv = 165;
+                        lowSI = 0.68; highSI = 1.88;
+                    } else {
+                        lowConv = 40; highConv = 140;
+                        lowSI = 0.46; highSI = 1.60;
+                    }
+                }
+
+                else if (testName.equals("Creatinine")) {
+                    si = value * 88.4;
+                    unitConv = "mg/dL"; unitSI = "µmol/L";
+
+                    if (sex.equals("M")) {
+                        lowConv = 0.9; highConv = 1.31;
+                        lowSI = 79.6; highSI = 114.9;
+                    } else {
+                        lowConv = 0.6; highConv = 1.2;
+                        lowSI = 53.04; highSI = 106.08;
+                    }
+                }
+
+                else if (testName.equals("Uric Acid")) {
+                    si = value / 16.81;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+
+                    if (sex.equals("M")) {
+                        lowConv = 3.5; highConv = 7.2;
+                        lowSI = 0.21; highSI = 0.42;
+                    } else {
+                        lowConv = 2.6; highConv = 6.0;
+                        lowSI = 0.15; highSI = 0.35;
+                    }
+                }
+
+                else if (testName.equals("BUN")) {
+                    si = value / 2.8;
+                    lowConv = 6.0; highConv = 20.0;
+                    lowSI = 2.14; highSI = 7.14;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+                }
+
+                else if (testName.equals("AST")) {
+                    si = value * 0.0167;
+                    lowConv = 0; highConv = 46;
+                    lowSI = 0; highSI = 0.78;
+                    unitConv = "U/L"; unitSI = "µkat/L";
+                }
+
+                else if (testName.equals("ALT")) {
+                    si = value * 0.0167;
+                    lowConv = 0; highConv = 49;
+                    lowSI = 0; highSI = 0.83;
+                    unitConv = "U/L"; unitSI = "µkat/L";
+                }
+
+                else if (testName.equals("Sodium")) {
+                    si = value;
+                    lowConv = 135; highConv = 145;
+                    lowSI = 135; highSI = 145;
+                    unitConv = "mEq/L"; unitSI = "mmol/L";
+                }
+
+                else if (testName.equals("Potassium")) {
+                    si = value;
+                    lowConv = 3.5; highConv = 5.0;
+                    lowSI = 3.5; highSI = 5.0;
+                    unitConv = "mEq/L"; unitSI = "mmol/L";
+                }
+
+                else if (testName.equals("Chloride")) {
+                    si = value;
+                    lowConv = 96; highConv = 110;
+                    lowSI = 96; highSI = 110;
+                    unitConv = "mEq/L"; unitSI = "mmol/L";
+                }
+
+                else if (testName.equals("Total Calcium")) {
+                    si = value / 4.0;
+                    lowConv = 8.6; highConv = 10.28;
+                    lowSI = 2.15; highSI = 2.57;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+                }
+
+                else if (testName.equals("Ionized Calcium")) {
+                    si = value / 4.0;
+                    lowConv = 4.4; highConv = 5.2;
+                    lowSI = 1.10; highSI = 1.30;
                     unitConv = "mg/dL"; unitSI = "mmol/L";
                 }
 
                 String status;
-                if (value > high) status = "HIGH";
-                else if (value < low) status = "LOW";
+                if (value > highConv) status = "HIGH";
+                else if (value < lowConv) status = "LOW";
                 else status = "NORMAL";
 
                 resultArea.append(
-                        "Test Name          : " + testName +
-                        "\nValue Entered      : " + value + " " + unitConv +
-                        "\nReference Range    : " + low + " - " + high +
-                        "\nSI Converted Value : " + String.format("%.2f", si) + " " + unitSI +
-                        "\nStatus             : " + status +
-                        "\n-------------------------------------------------\n\n"
+                        "Test Name            : " + testName +
+                                "\nValue Entered        : " + value + " " + unitConv +
+                                "\nConventional Range   : " + lowConv + " - " + highConv + " " + unitConv +
+                                "\nSI Converted Value   : " + String.format("%.2f", si) + " " + unitSI +
+                                "\nSI Range             : " + lowSI + " - " + highSI + " " + unitSI +
+                                "\nStatus               : " + status +
+                                "\n-------------------------------------------------\n\n"
                 );
 
             } catch (NumberFormatException ex) {

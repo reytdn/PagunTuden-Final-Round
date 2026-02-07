@@ -28,6 +28,9 @@ public class PagunTudenClinicApp {
         System.out.print("Enter City: ");
         String city = input.nextLine();
 
+        System.out.print("Enter Baranggay: ");
+        String baranggay = input.nextLine();
+
         System.out.print("Enter Time of Last Meal: ");
         String lastMeal = input.nextLine();
 
@@ -41,7 +44,7 @@ public class PagunTudenClinicApp {
                 new PatientsDemographicsInfo(
                         fname, mname, lname,
                         age, sex,
-                        city, province,
+                        city, province, baranggay,
                         lastMeal, amorpm, physician
                 );
 

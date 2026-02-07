@@ -15,6 +15,7 @@ public class PatientsDemographicsInfo {
 
     private String city;
     private String province;
+    private String baranggay;
 
     private String dateOfCollection;
     private String timeOfCollection;
@@ -24,7 +25,7 @@ public class PatientsDemographicsInfo {
     private String requestingPhysician;
 
     public PatientsDemographicsInfo(String fname, String mname, String lname,
-            int age, String sex, String city, String province,
+            int age, String sex, String city, String province, String baranggay,
             String timeOfLastMeal, String amorpm, String requestingPhysician) {
 
         this.patientID = nextID++;
@@ -38,6 +39,7 @@ public class PatientsDemographicsInfo {
 
         this.city = city;
         this.province = province;
+        this.baranggay = baranggay;
 
         this.dateOfCollection = LocalDate.now().toString();
         this.timeOfCollection = LocalTime.now()
@@ -59,7 +61,7 @@ public class PatientsDemographicsInfo {
                "\nPatient Name: " + fname + " " + mname + " " + lname +
                "\nAge: " + age +
                "\nSex: " + sex +
-               "\nAddress: " + province + ", " + city +
+               "\nAddress: " + province + ", " + city + ", " + baranggay +
                "\nDate of Collection: " + dateOfCollection +
                "\nTime of Collection: " + timeOfCollection +
                "\nTime of Last Meal: " + timeOfLastMeal + " " + amorpm +
