@@ -1,4 +1,4 @@
-public class rangeFandM {
+public class rangeInterpretation {
 
     public static String interpret(double value, double low, double high) {
 
