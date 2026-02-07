@@ -233,12 +233,12 @@ public class PagunTudenClinicAppGUI extends JFrame {
                     case "AST" -> {
                         si = value * 0.0167; highConv = 45; highSI = 0.75;
                         unitConv = "U/L"; unitSI = "µkat/L";
-                        status = (value > highConv) ? "HIGH" : "NORMAL"; // logic from LabTestMenuSystem
+                        status = (value > highConv) ? "HIGH" : "NORMAL"; 
                     }
                     case "ALT" -> {
                         si = value * 0.0167; highConv = 48; highSI = 0.80;
                         unitConv = "U/L"; unitSI = "µkat/L";
-                        status = (value > highConv) ? "HIGH" : "NORMAL"; // logic from LabTestMenuSystem
+                        status = (value > highConv) ? "HIGH" : "NORMAL";
                     }
                     case "Sodium" -> { si = value; lowConv = 135; highConv = 145; lowSI = 135; highSI = 145; unitConv = "mEq/L"; unitSI = "mmol/L"; status = interpretRange(value, lowConv, highConv);}
                     case "Potassium" -> { si = value; lowConv = 3.5; highConv = 5.0; lowSI = 3.5; highSI = 5.0; unitConv = "mEq/L"; unitSI = "mmol/L"; status = interpretRange(value, lowConv, highConv);}
