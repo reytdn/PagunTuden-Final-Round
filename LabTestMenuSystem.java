@@ -1,18 +1,29 @@
 import java.util.Scanner;
 
+//This class is a menu-driven system for entering and processing lab results
+//LabTests is an object the class SelectedLabTests that stores and manages test results
+//sex stores the patient's sex, which is used to interpret some lab results differently
+//for male(M) and Female(F)   
+//*HDL
+//*Triglycerides
+//*Creatinine
+//*Uric Acid
 public class LabTestMenuSystem {
 
     private SelectedLabTests labTests;
     private String sex;
 
+    //The constructor initializes labTests so it can store results
     public LabTestMenuSystem(String sex) {
         labTests = new SelectedLabTests();
-
+    //Male or Female
         this.sex = sex.trim().toUpperCase().startsWith("M") ? "M" : "F";
     }
 
+    //runs the main interactive loop
     public void startLabMenu() {
 
+        //accepts user input which is the "choice"
         Scanner input = new Scanner(System.in);
         int choice;
 
@@ -20,6 +31,8 @@ public class LabTestMenuSystem {
             displayMenu();
             choice = input.nextInt();
 
+            //if choice == 18
+            //it ends the program
             if (choice == 18) {
                 System.out.println("Exiting Lab Menu...");
                 break;
@@ -32,6 +45,8 @@ public class LabTestMenuSystem {
         System.out.println("Program Ended.");
     }
 
+    //displays menu of LabTest starting from FBS which is 1 to 18 which is to exit
+    //Choice 17 shows all recorded results
     private void displayMenu() {
 
         System.out.println("\n===== LAB TEST MAIN MENU =====");
@@ -56,8 +71,13 @@ public class LabTestMenuSystem {
         System.out.print("Choose Test: ");
     }
 
+    //prompts the user to enter 
+    //converts the entered Conventional Value to SI Units
+    //interprets the value whether it is low, normal and high or just high and normal
+    //Specifically in AST and ALT test using the rangeInterpretation class
     private void processChoice(int choice, Scanner input) {
 
+        //FOR FBS
         if (choice == 1) {
             System.out.print("Enter FBS Value (mg/dL): ");
             double value = input.nextDouble();
@@ -75,6 +95,7 @@ public class LabTestMenuSystem {
                     interpretation);
         }
 
+        //FOR RBS
         else if (choice == 2) {
             System.out.print("Enter RBS Value (mg/dL): ");
             double value = input.nextDouble();
@@ -92,6 +113,7 @@ public class LabTestMenuSystem {
                     interpretation);
         }
 
+        //FOR TOTAL CHOLESTEROL
         else if (choice == 3) { 
             System.out.print("Enter Total Cholesterol Value (mg/dL): ");
             double value = input.nextDouble();
@@ -109,6 +131,7 @@ public class LabTestMenuSystem {
                     interpretation);
         }
 
+        //FOR HDL
         else if (choice == 4) { 
             System.out.print("Enter HDL Value (mg/dL): ");
             double value = input.nextDouble();
@@ -133,6 +156,7 @@ public class LabTestMenuSystem {
                     interpretation);
         }
 
+        //FOR LDL
         else if (choice == 5) { 
             System.out.print("Enter LDL Value (mg/dL): ");
             double value = input.nextDouble();
@@ -150,6 +174,7 @@ public class LabTestMenuSystem {
                     interpretation);
         }
 
+        //FOR TRIGLYCERIDES
         else if (choice == 6) { 
             System.out.print("Enter Triglycerides Value (mg/dL): ");
             double value = input.nextDouble();
@@ -174,6 +199,7 @@ public class LabTestMenuSystem {
                     interpretation);
         }
 
+        //FOR CREATININE
         else if (choice == 7) { 
             System.out.print("Enter Creatinine Value (mg/dL): ");
             double value = input.nextDouble();
@@ -198,6 +224,7 @@ public class LabTestMenuSystem {
                     interpretation);
         }
 
+        //FOR URIC ACID
         else if (choice == 8) {
             System.out.print("Enter Uric Acid Value (mg/dL): ");
             double value = input.nextDouble();
@@ -222,6 +249,7 @@ public class LabTestMenuSystem {
                     interpretation);
         }
 
+        //FOR BUN
         else if (choice == 9) { 
             System.out.print("Enter BUN Value (mg/dL): ");
             double value = input.nextDouble();
@@ -240,6 +268,7 @@ public class LabTestMenuSystem {
                     interpretation);
         }
 
+        //FOR AST
         else if (choice == 10) { 
             System.out.print("Enter AST Value (U/L): ");
             double value = input.nextDouble();
@@ -257,7 +286,7 @@ public class LabTestMenuSystem {
                     interpretation);
         }
 
-
+        //FOR ALT
         else if (choice == 11) { 
             System.out.print("Enter ALT Value (U/L): ");
             double value = input.nextDouble();
@@ -275,6 +304,7 @@ public class LabTestMenuSystem {
                     interpretation);
         }
 
+        //FOR SODIUM
         else if (choice == 12) { 
             System.out.print("Enter Sodium Value (mEq/L): ");
             double value = input.nextDouble();
@@ -291,6 +321,7 @@ public class LabTestMenuSystem {
                     interpretation);
         }
 
+        //FOR POTASSIUM
         else if (choice == 13) {
             System.out.print("Enter Potassium Value (mEq/L): ");
             double value = input.nextDouble();
@@ -307,6 +338,7 @@ public class LabTestMenuSystem {
                     interpretation);
         }
 
+        //FOR CHLORIDE
         else if (choice == 14) { 
             System.out.print("Enter Chloride Value (mEq/L): ");
             double value = input.nextDouble();
@@ -323,6 +355,7 @@ public class LabTestMenuSystem {
                     interpretation);
         }
 
+        //FOR TOTAL CALCIUM
         else if (choice == 15) { 
             System.out.print("Enter Total Calcium Value (mg/dL): ");
             double value = input.nextDouble();
@@ -340,6 +373,7 @@ public class LabTestMenuSystem {
                     interpretation);
         }
 
+        //FOR IONIZED CALCIUM
         else if (choice == 16) {
             System.out.print("Enter Ionized Calcium Value (mg/dL): ");
             double value = input.nextDouble();
@@ -356,7 +390,7 @@ public class LabTestMenuSystem {
                     lowSI, highSI,
                     interpretation);
         }
-
+        //Shows all stored or recorded results
         else if (choice == 17) {
             labTests.displayResults();
         }
