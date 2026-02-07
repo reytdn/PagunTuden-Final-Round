@@ -2,8 +2,19 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+//This class stores all the demographic information of the patient
+//*NAME
+//*ADDRESS
+//*SEX
+//*AGE
+//*DATE AND TIME OF COLLECTION
+//*TIME OF LAST MEAL
+//*REQUESTING PHYSICIAN
 public class PatientsDemographicsInfo {
 
+    //This automatically sets a unique ID starting from 1001 and if added new patient it'll be 1002
+    //But this feature is not that relevant as of now for our program
+    //Because our program implements only 1Patient Multiple Tests
     private static int nextID = 1001;
 
     private int patientID;
@@ -50,7 +61,9 @@ public class PatientsDemographicsInfo {
         this.requestingPhysician = requestingPhysician;
     }
 
-    
+    //Returns the patient's sex
+    //Because Sex of the patient is relevant in other LabTest 
+    //The inputted sex of the patient is used in the LabTestMenuSystem
     public String getSex() {
         return sex;
     }
