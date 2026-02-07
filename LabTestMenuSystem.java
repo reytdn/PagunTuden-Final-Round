@@ -245,32 +245,33 @@ public class LabTestMenuSystem {
             double value = input.nextDouble();
             double si = CONVENTIONALtoSI.enzymeToSI(value);
 
-            double lowConv = 0, highConv = 46;
-            double lowSI = 0, highSI = 0.78;
+            double highConv = 45;
+            double highSI = 0.78;
 
-            String interpretation = rangeInterpretation.interpret(value, lowConv, highConv);
+            String interpretation = (value > highConv) ? "HIGH" : "NORMAL";
 
             labTests.addTestResult("AST", value, si,
                     "U/L", "µkat/L",
-                    lowConv, highConv,
-                    lowSI, highSI,
+                    0, highConv,  
+                    0, highSI,     
                     interpretation);
         }
+
 
         else if (choice == 11) { 
             System.out.print("Enter ALT Value (U/L): ");
             double value = input.nextDouble();
             double si = CONVENTIONALtoSI.enzymeToSI(value);
 
-            double lowConv = 0, highConv = 49;
-            double lowSI = 0, highSI = 0.83;
+            double highConv = 48;
+            double highSI = 0.83;
 
-            String interpretation = rangeInterpretation.interpret(value, lowConv, highConv);
+            String interpretation = (value > highConv) ? "HIGH" : "NORMAL";
 
             labTests.addTestResult("ALT", value, si,
                     "U/L", "µkat/L",
-                    lowConv, highConv,
-                    lowSI, highSI,
+                    0, highConv,   
+                    0, highSI,     
                     interpretation);
         }
 
