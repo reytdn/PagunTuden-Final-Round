@@ -50,6 +50,7 @@ public class LabTestMenuSystem {
     private void displayMenu() {
 
         System.out.println("\n===== LAB TEST MAIN MENU =====");
+        System.out.println("");
         System.out.println("1  - FBS Test");
         System.out.println("2  - RBS Test");
         System.out.println("3  - Total Cholesterol Test");
@@ -68,6 +69,7 @@ public class LabTestMenuSystem {
         System.out.println("16 - Ionized Calcium Test");
         System.out.println("17 - Process Result");
         System.out.println("18 - Exit");
+        System.out.println("");
         System.out.print("Choose Test: ");
     }
 

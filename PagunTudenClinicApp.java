@@ -15,33 +15,44 @@ public class PagunTudenClinicApp {
         System.out.print("Enter First Name: ");
         String fname = input.nextLine();
 
+        System.out.println("");
         System.out.print("Enter Middle Name: ");
         String mname = input.nextLine();
 
+        System.out.println("");
         System.out.print("Enter Last Name: ");
         String lname = input.nextLine();
 
+        System.out.println("");
         System.out.print("Enter Age: ");
         int age = input.nextInt();
-
+        input.nextLine(); 
+        
+        System.out.println("");
         System.out.print("Enter Sex (F/M): ");
         String sex = input.nextLine();
 
+        System.out.println("");
         System.out.print("Enter Province: ");
         String province = input.nextLine();
 
+        System.out.println("");
         System.out.print("Enter City: ");
         String city = input.nextLine();
 
+        System.out.println("");
         System.out.print("Enter Baranggay: ");
         String baranggay = input.nextLine();
 
+        System.out.println("");
         System.out.print("Enter Time of Last Meal: ");
         String lastMeal = input.nextLine();
 
+        System.out.println("");
         System.out.print("Enter (AM/PM): ");
         String amorpm = input.nextLine();
 
+        System.out.println("");
         System.out.print("Enter Requesting Physician: ");
         String physician = input.nextLine();
 
