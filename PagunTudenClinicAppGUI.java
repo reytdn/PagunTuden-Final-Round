@@ -73,7 +73,7 @@ public class PagunTudenClinicAppGUI extends JFrame {
 
         patientPanel.add(new JLabel("Middle Name:"));//this adds the middle name label and text field to the patient information panel, allowing users to input the patient's middle name.
 
-        patientPanel.add(mnameField);\
+        patientPanel.add(mnameField);
 
         patientPanel.add(new JLabel("Last Name:"));;//this adds the last name label and text field to the patient information panel, allowing users to input the patient's last name.
 
