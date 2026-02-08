@@ -1,62 +1,50 @@
 public class CONVENTIONALtoSI {
 
-    //Conversion of FBS and RBS Conventional Units to SI Units
-    public static double glucoseToSI(double value) {
-        return value / 18.0;
+    public static double glucoseToSI(double value) {// method to convert glucose from conventional units (mg/dL) to SI units (mmol/L)
+        return value / 18.0;// conversion factor for glucose from mg/dL to mmol/L
     }
 
-    //Conversion of Total Cholesterol Convention Units to SI Units
-    public static double cholesterolToSI(double value) {
+    public static double cholesterolToSI(double value) {// method to convert cholesterol from conventional units (mg/dL) to SI units (mmol/L)
         return value / 38.67;
     }
 
-    //Conversion of HDL Convention Units to SI Units
-    public static double hdlToSI(double value) {
+    public static double hdlToSI(double value) {// method to convert HDL cholesterol from conventional units (mg/dL) to SI units (mmol/L)
         return value / 38.67;
     }
 
-    //Conversion of LDL Cholesterol Convention Units to SI Units
-    public static double ldlToSI(double value) {
+    public static double ldlToSI(double value) {//process of converting LDL cholesterol from conventional units (mg/dL) to SI units (mmol/L)
         return value / 38.67;
     }
 
-    //Conversion of Triglycerides Convention Units to SI Units
-    public static double triglyceridesToSI(double value) {
+    public static double triglyceridesToSI(double value) {//process of converting triglycerides from conventional units (mg/dL) to SI units (mmol/L)
         return value / 88.57;
     }
 
-    //Conversion of Creatinine Convention Units to SI Units
-    public static double creatinineToSI(double value) {
+    public static double creatinineToSI(double value) {// method to convert creatinine from conventional units (mg/dL) to SI units (µmol/L)
         return value * 88.4;
     }
 
-    //Conversion of Uric Acid Convention Units to SI Units
-    public static double uricAcidToSI(double value) {
+    public static double uricAcidToSI(double value) {// method to convert uric acid from conventional units (mg/dL) to SI units (µmol/L)
         return value / 16.81;
     }
 
-    //Conversion of BUN Convention Units to SI Units
-    public static double bunToSI(double value) {
+    public static double bunToSI(double value) {// method to convert blood urea nitrogen (BUN) from conventional units (mg/dL) to SI units (mmol/L)
         return value / 2.801;
     }
 
-    //Conversion of AST and ALT Convention Units to SI Units
-    public static double enzymeToSI(double value) {
+    public static double enzymeToSI(double value) {// method to convert enzyme levels ( AST, ALT) from conventional units (U/L) to SI units (µkat/L)
         return value / 60.0;
     }
 
-    //Conversion of Sodium, Potassium, Chloride Convention Units to SI Units
-    public static double electrolyteToSI(double value) {
+    public static double electrolyteToSI(double value) {// method to convert electrolyte levels (sodium, potassium, chloride) from conventional units (mmol/L) to SI units (mmol/L)
         return value;
     }
 
-    //Conversion of Total Calcium Convention Units to SI Units
-    public static double totalCalciumToSI(double value) {
+    public static double totalCalciumToSI(double value) {// method to convert total calcium from conventional units (mg/dL) to SI units (mmol/L)
         return value * 0.2495;
     }
 
-    //Conversion of Ionized Calcium Convention Units to SI Units
-    public static double ionizedCalciumToSI(double value) {
+    public static double ionizedCalciumToSI(double value) {// method to convert ionized calcium from conventional units (mg/dL) to SI units (mmol/L)
         return value * 0.2495;
     }
 }

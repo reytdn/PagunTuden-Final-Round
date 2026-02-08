@@ -1,9 +1,16 @@
-import java.util.ArrayList;
+import java.util.ArrayList;  
 
+// Class to manage selected lab tests and their results, including methods to add test results and display them in a formatted manner.
 public class SelectedLabTests {
 
+    // List to hold formatted test results as strings
     private ArrayList<String> chosenTests = new ArrayList<>();
 
+    
+      // Method to add a lab test result to the list.
+      //Parameters include test name, values in conventional and SI units,
+      //reference ranges, units, and interpretation.
+     
     public void addTestResult(String testName,
                             double conventional,
                             double siValue,
@@ -15,6 +22,7 @@ public class SelectedLabTests {
                             double highSI,
                             String interpretation) {
 
+        // Format  para mag store sang test result as a string in sa list
         chosenTests.add(
                 testName +
                 "\n   Conventional: " + String.format("%.2f", conventional) + " " + unitConv +
@@ -26,13 +34,20 @@ public class SelectedLabTests {
         );
     }
 
+    
+    // Method to display all stored test results.
+      //Prints a header, then either a message if no tests are stored,
+      //or each test result in the list.
+     
     public void displayResults() {
 
         System.out.println("\n===== SELECTED LAB TEST RESULTS =====");
 
+        // Check if any test results have been stored, and print them or a message if none
         if (chosenTests.isEmpty()) {
             System.out.println("No tests were selected.");
         } else {
+            // Print each stored test result
             for (String test : chosenTests) {
                 System.out.println(test);
             }

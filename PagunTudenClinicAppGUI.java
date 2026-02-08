@@ -7,57 +7,44 @@ import java.time.format.DateTimeFormatter;
 
 public class PagunTudenClinicAppGUI extends JFrame {
 
-    // It will assign a unique patient ID to each new patient entry, starting from 1001 and incrementing for each new patient added to the system.
     private static int nextID = 1001;
 
-    // Demographics input fields: JTextFields capture single-line text input for the patient
     private JTextField fnameField, mnameField, lnameField;
     private JTextField ageField, provinceField, cityField;
     private JTextField lastMealField, physicianField;
 
-    // Combo boxes for selecting sex and AM/PM for last meal
     private JComboBox<String> sexBox, mealAmPmBox;
 
-    // Table to enter lab test values, with a DefaultTableModel to manage the data
     private JTable testTable;
     private DefaultTableModel tableModel;
 
-    // TextArea to display the final lab report output
     private JTextArea resultArea;
 
-    // Variables to hold patient ID, date, and time of collection for the report header
     private int patientID;
     private String dateCollection;
     private String timeCollection;
 
-    // Constructor to build the GUI
     public PagunTudenClinicAppGUI() {
 
-        // Assign unique patient ID
         patientID = nextID++;
 
-        // Get current date
         dateCollection = LocalDate.now().toString();
 
-        // Get current time formatted as hh:mm AM/PM
         DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm a");
         timeCollection = LocalTime.now().format(timeFormat);
 
-        // Set up the main frame properties like title, size, close operation, and center it on the screen
         setTitle("PagunTuden Clinic Laboratory Information System");
-        setSize(1200, 850); // width x height in pixels
+        setSize(1200, 850);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // centers window on the screen
+        setLocationRelativeTo(null);
 
-        // Main panel with BorderLayout to organize subpanels
-        JPanel mainPanel = new JPanel(new BorderLayout(15, 15)); // horizontal and vertical gaps = 15px
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15)); // margin around edges
+        JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        // ------------------- Patient Information Panel -------------------
-        JPanel patientPanel = new JPanel(new GridLayout(8, 2, 8, 8)); // 8 rows x 2 columns, 8px gaps
-        patientPanel.setBorder(BorderFactory.createTitledBorder("Patient Information")); // titled border
+        // ===================== PATIENT INFO =====================
+        JPanel patientPanel = new JPanel(new GridLayout(8, 2, 8, 8));
+        patientPanel.setBorder(BorderFactory.createTitledBorder("Patient Information"));
 
-        // Initialize text fields
         fnameField = new JTextField();
         mnameField = new JTextField();
         lnameField = new JTextField();
@@ -65,12 +52,10 @@ public class PagunTudenClinicAppGUI extends JFrame {
         provinceField = new JTextField();
         cityField = new JTextField();
 
-        // Sex selection combo box
         sexBox = new JComboBox<>(new String[]{"M", "F"});
 
-        // Add labels and fields in GridLayout
         patientPanel.add(new JLabel("Patient ID (Auto):"));
-        patientPanel.add(new JLabel(String.valueOf(patientID))); // auto-generated patient ID
+        patientPanel.add(new JLabel(String.valueOf(patientID)));
 
         patientPanel.add(new JLabel("First Name:"));
         patientPanel.add(fnameField);
@@ -93,7 +78,7 @@ public class PagunTudenClinicAppGUI extends JFrame {
         patientPanel.add(new JLabel("City:"));
         patientPanel.add(cityField);
 
-        // ------------------- Request Details Panel -------------------
+        // ===================== REQUEST DETAILS =====================
         JPanel requestPanel = new JPanel(new GridLayout(4, 2, 8, 8));
         requestPanel.setBorder(BorderFactory.createTitledBorder("Request Details"));
 
@@ -111,9 +96,9 @@ public class PagunTudenClinicAppGUI extends JFrame {
         requestPanel.add(physicianField);
 
         requestPanel.add(new JLabel("Date & Time Collected:"));
-        requestPanel.add(new JLabel(dateCollection + " " + timeCollection)); // shows timestamp
+        requestPanel.add(new JLabel(dateCollection + " " + timeCollection));
 
-        // ------------------- Lab Tests Panel -------------------
+        // ===================== LAB TEST TABLE =====================
         JPanel labPanel = new JPanel(new BorderLayout());
         labPanel.setBorder(BorderFactory.createTitledBorder("Laboratory Tests (Enter Value Per Test)"));
 
@@ -127,52 +112,45 @@ public class PagunTudenClinicAppGUI extends JFrame {
                 "Total Calcium", "Ionized Calcium"
         };
 
-        // add tests to table model with empty values for input
         for (String test : tests) {
             tableModel.addRow(new Object[]{test, ""});
         }
 
         testTable = new JTable(tableModel);
-        testTable.getColumnModel().getColumn(0).setPreferredWidth(250); // Test Name column width
-        testTable.getColumnModel().getColumn(1).setPreferredWidth(500); // Value column width
         testTable.setRowHeight(30);
 
         JScrollPane tableScroll = new JScrollPane(testTable);
         labPanel.add(tableScroll, BorderLayout.CENTER);
 
-        // TextArea to show final lab report
+        // ===================== REPORT AREA =====================
         resultArea = new JTextArea(15, 70);
         resultArea.setEditable(false);
         resultArea.setFont(new Font("Monospaced", Font.PLAIN, 13));
         JScrollPane scroll = new JScrollPane(resultArea);
         scroll.setBorder(BorderFactory.createTitledBorder("Laboratory Report Output"));
 
-        // Button to process all entered lab tests
+        // ===================== PROCESS BUTTON =====================
         JButton processButton = new JButton("PROCESS ALL ENTERED TESTS");
         processButton.setFont(new Font("Arial", Font.BOLD, 14));
         processButton.addActionListener(e -> processMultipleTests());
 
-        // Layout top panels: patient info + request details
         JPanel topPanel = new JPanel(new GridLayout(1, 2, 15, 15));
         topPanel.add(patientPanel);
         topPanel.add(requestPanel);
 
-        // Add components to main panel
         mainPanel.add(topPanel, BorderLayout.NORTH);
         mainPanel.add(labPanel, BorderLayout.CENTER);
         mainPanel.add(processButton, BorderLayout.WEST);
         mainPanel.add(scroll, BorderLayout.SOUTH);
 
-        // Add main panel to frame
         add(mainPanel);
     }
 
-    // ------------------- Process Lab Test Values -------------------
+    // ===================== PROCESS TESTS =====================
     private void processMultipleTests() {
 
         String sex = (String) sexBox.getSelectedItem();
 
-        // Header for lab report
         resultArea.setText(
                 "=========== PAGUNTUDEN CLINIC LAB REPORT ===========\n\n" +
                         "Patient ID: " + patientID +
@@ -190,73 +168,188 @@ public class PagunTudenClinicAppGUI extends JFrame {
                         "\n\n=================================================\n\n"
         );
 
-        // Loop through each test in the table
         for (int i = 0; i < tableModel.getRowCount(); i++) {
 
             String testName = tableModel.getValueAt(i, 0).toString();
             String valueText = tableModel.getValueAt(i, 1).toString();
 
-            // Skip if no value entered
             if (valueText.isEmpty()) continue;
 
             try {
-                double value = Double.parseDouble(valueText); // convert input to double
-                double si = 0; // SI converted value
-                double lowConv = 0, highConv = 0; // conventional range
-                double lowSI = 0, highSI = 0; // SI range
-                String unitConv = "", unitSI = ""; // units
-                String status = ""; // NORMAL/LOW/HIGH
+                double value = Double.parseDouble(valueText);
 
-                // If-else statements for each lab test
+                double si = 0;
+                double lowConv = 0, highConv = 0;
+                double lowSI = 0, highSI = 0;
+
+                String unitConv = "", unitSI = "";
+                String status = "";
+
+                // ===================== RANGES BASED ON YOUR TABLE =====================
+
                 if (testName.equals("FBS")) {
-                    si = value / 18.0; lowConv = 74; highConv = 100; lowSI = 4.07; highSI = 5.5;
+                    si = value / 18.0;
+                    lowConv = 74; highConv = 100;
+                    lowSI = 4.07; highSI = 5.5;
                     unitConv = "mg/dL"; unitSI = "mmol/L";
                     status = interpretRange(value, lowConv, highConv);
-                } else if (testName.equals("RBS")) {
-                    si = value / 18.0; lowConv = 70; highConv = 139; lowSI = 3.9; highSI = 7.7;
-                    unitConv = "mg/dL"; unitSI = "mmol/L";
-                    status = interpretRange(value, lowConv, highConv);
-                } else if (testName.equals("Total Cholesterol")) {
-                    si = value / 38.67; lowConv = 150; highConv = 200; lowSI = 3.9; highSI = 5.72;
-                    unitConv = "mg/dL"; unitSI = "mmol/L";
-                    status = interpretRange(value, lowConv, highConv);
-                } else if (testName.equals("HDL")) {
-                    si = value / 38.67; unitConv = "mg/dL"; unitSI = "mmol/L";
-                    if (sex.equals("M")) { lowConv = 35; highConv = 80; lowSI = 0.91; highSI = 2.08; }
-                    else { lowConv = 42; highConv = 88; lowSI = 1.09; highSI = 2.29; }
-                    status = interpretRange(value, lowConv, highConv);
-                } else if (testName.equals("AST")) {
-                    si = value * 0.0167; highConv = 45; highSI = 0.75;
-                    unitConv = "U/L"; unitSI = "µkat/L";
-                    status = (value > highConv) ? "HIGH" : "NORMAL";
-                } else if (testName.equals("ALT")) {
-                    si = value * 0.0167; highConv = 48; highSI = 0.80;
-                    unitConv = "U/L"; unitSI = "µkat/L";
-                    status = (value > highConv) ? "HIGH" : "NORMAL";
-                } else if (testName.equals("Sodium")) {
-                    si = value; lowConv = 135; highConv = 145; lowSI = 135; highSI = 145;
-                    unitConv = "mEq/L"; unitSI = "mmol/L"; status = interpretRange(value, lowConv, highConv);
-                } else if (testName.equals("Potassium")) {
-                    si = value; lowConv = 3.5; highConv = 5.0; lowSI = 3.5; highSI = 5.0;
-                    unitConv = "mEq/L"; unitSI = "mmol/L"; status = interpretRange(value, lowConv, highConv);
-                } else if (testName.equals("Chloride")) {
-                    si = value; lowConv = 96; highConv = 110; lowSI = 96; highSI = 110;
-                    unitConv = "mEq/L"; unitSI = "mmol/L"; status = interpretRange(value, lowConv, highConv);
-                } else if (testName.equals("Total Calcium")) {
-                    si = value / 4.0; lowConv = 8.6; highConv = 10.28; lowSI = 2.15; highSI = 2.57;
-                    unitConv = "mg/dL"; unitSI = "mmol/L"; status = interpretRange(value, lowConv, highConv);
-                } else if (testName.equals("Ionized Calcium")) {
-                    si = value / 4.0; lowConv = 4.4; highConv = 5.2; lowSI = 1.10; highSI = 1.30;
-                    unitConv = "mg/dL"; unitSI = "mmol/L"; status = interpretRange(value, lowConv, highConv);
                 }
 
-                // Append test results to report
+                else if (testName.equals("RBS")) {
+                    si = value / 18.0;
+                    lowConv = 70; highConv = 139;
+                    lowSI = 3.9; highSI = 7.7;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("Total Cholesterol")) {
+                    si = value / 38.67;
+                    lowConv = 150; highConv = 200;
+                    lowSI = 3.9; highSI = 5.72;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("HDL")) {
+                    si = value / 38.67;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+
+                    if (sex.equals("M")) {
+                        lowConv = 35; highConv = 80;
+                        lowSI = 0.91; highSI = 2.08;
+                    } else {
+                        lowConv = 42; highConv = 88;
+                        lowSI = 1.09; highSI = 2.29;
+                    }
+
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("LDL")) {
+                    si = value / 38.67;
+                    lowConv = 50; highConv = 130;
+                    lowSI = 1.3; highSI = 3.38;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("Triglycerides")) {
+                    si = value / 88.57;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+
+                    if (sex.equals("M")) {
+                        lowConv = 60; highConv = 165;
+                        lowSI = 0.68; highSI = 1.88;
+                    } else {
+                        lowConv = 40; highConv = 140;
+                        lowSI = 0.46; highSI = 1.60;
+                    }
+
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("Creatinine")) {
+                    si = value * 88.4;
+                    unitConv = "mg/dL"; unitSI = "umol/L";
+
+                    if (sex.equals("M")) {
+                        lowConv = 0.9; highConv = 1.3;
+                        lowSI = 79.6; highSI = 114.9;
+                    } else {
+                        lowConv = 0.6; highConv = 1.2;
+                        lowSI = 53.04; highSI = 106.08;
+                    }
+
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("Uric Acid")) {
+                    si = value / 16.81;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+
+                    if (sex.equals("M")) {
+                        lowConv = 3.5; highConv = 7.2;
+                        lowSI = 0.21; highSI = 0.42;
+                    } else {
+                        lowConv = 2.6; highConv = 6.0;
+                        lowSI = 0.15; highSI = 0.35;
+                    }
+
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("BUN")) {
+                    si = value * 0.357;
+                    lowConv = 6.0; highConv = 20.0;
+                    lowSI = 2.14; highSI = 7.14;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("AST")) {
+                    si = value * 0.0167;
+                    lowConv = 0; highConv = 45;
+                    lowSI = 0; highSI = 0.78;
+                    unitConv = "U/L"; unitSI = "uKat/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("ALT")) {
+                    si = value * 0.0167;
+                    lowConv = 0; highConv = 48;
+                    lowSI = 0; highSI = 0.83;
+                    unitConv = "U/L"; unitSI = "uKat/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("Sodium")) {
+                    si = value;
+                    lowConv = 135; highConv = 145;
+                    lowSI = 135; highSI = 145;
+                    unitConv = "mEq/L"; unitSI = "mmol/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("Potassium")) {
+                    si = value;
+                    lowConv = 3.5; highConv = 5.0;
+                    lowSI = 3.5; highSI = 5.0;
+                    unitConv = "mEq/L"; unitSI = "mmol/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("Chloride")) {
+                    si = value;
+                    lowConv = 96; highConv = 110;
+                    lowSI = 96; highSI = 110;
+                    unitConv = "mEq/L"; unitSI = "mmol/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("Total Calcium")) {
+                    si = value / 4.0;
+                    lowConv = 8.6; highConv = 10.28;
+                    lowSI = 2.15; highSI = 2.57;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                else if (testName.equals("Ionized Calcium")) {
+                    si = value / 4.0;
+                    lowConv = 4.4; highConv = 5.2;
+                    lowSI = 1.10; highSI = 1.30;
+                    unitConv = "mg/dL"; unitSI = "mmol/L";
+                    status = interpretRange(value, lowConv, highConv);
+                }
+
+                // ===================== PRINT RESULTS =====================
                 resultArea.append(
                         "Test Name            : " + testName +
                                 "\nValue Entered        : " + value + " " + unitConv +
-                                "\nConventional Range   : " + lowConv + (testName.equals("AST") || testName.equals("ALT") ? "" : " - " + highConv) + " " + unitConv +
+                                "\nConventional Range   : " + lowConv + " - " + highConv + " " + unitConv +
                                 "\nSI Converted Value   : " + String.format("%.2f", si) + " " + unitSI +
-                                (testName.equals("AST") || testName.equals("ALT") ? "" : "\nSI Range             : " + lowSI + " - " + highSI + " " + unitSI) +
+                                "\nSI Range             : " + lowSI + " - " + highSI + " " + unitSI +
                                 "\nStatus               : " + status +
                                 "\n-------------------------------------------------\n\n"
                 );
@@ -269,7 +362,6 @@ public class PagunTudenClinicAppGUI extends JFrame {
         resultArea.append("=========== END OF REPORT ===========\n");
     }
 
-    // Interpret a value against a reference range
     private String interpretRange(double value, double low, double high) {
         if (value < low) return "LOW";
         else if (value > high) return "HIGH";
