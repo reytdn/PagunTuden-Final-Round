@@ -7,69 +7,84 @@ import java.time.format.DateTimeFormatter;
 
 public class PagunTudenClinicAppGUI extends JFrame {
 
-    private static int nextID = 1001;
-
+    private static int nextID = 1001; //gives the patient a unique id
+     //  demographics input fields, JTextFields The JTextField in Java Swing is a graphical user interface (GUI) component that allows a user to enter or edit a single line of text. It is a fundamental component for capturing user input like names, email addresses, or search queries in a GUI application. 
     private JTextField fnameField, mnameField, lnameField;
     private JTextField ageField, provinceField, cityField;
     private JTextField lastMealField, physicianField;
 
-    private JComboBox<String> sexBox, mealAmPmBox;
 
+  // Combo boxes for selecting sex and AM/PM for last meal
+    private JComboBox<String> sexBox, mealAmPmBox;
+ // Table to enter lab test values, with a DefaultTableModel to manage the data
     private JTable testTable;
     private DefaultTableModel tableModel;
 
     private JTextArea resultArea;
 
+      // show the final lab report output in a JTextArea (multi-line text area that can display the formatted report)
+// Variables to hold patient ID, date and time of collection for the report header
     private int patientID;
     private String dateCollection;
     private String timeCollection;
-
+ // Constructor to build the GUI
     public PagunTudenClinicAppGUI() {
-
+ 
         patientID = nextID++;
 
         dateCollection = LocalDate.now().toString();
 
         DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm a");
         timeCollection = LocalTime.now().format(timeFormat);
-
+  // Set up the main frame properties like title, size, close operation, and center it on the screen 
         setTitle("PagunTuden Clinic Laboratory Information System");
-        setSize(1200, 850);
+        setSize(1200, 850);//this is the measurement of the window size in pixels, where 1200 is the width and 850 is the height. This size is chosen to provide ample space for all the components of the GUI, including input fields, tables, and the report area, while still being manageable on most screens.
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);// Centers the window on the screen
 
-        JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+
+        JPanel mainPanel = new JPanel(new BorderLayout(15, 15));// THIS IS THE MEASUREMENT OF THE GAP BETWEEN COMPONENTS IN THE BORDERLAYOUT, WHERE 15 IS THE HORIZONTAL GAP AND 15 IS THE VERTICAL GAP. THIS PROVIDES SPACING BETWEEN THE DIFFERENT PANELS AND COMPONENTS IN THE GUI, MAKING IT MORE VISUALLY APPEALING AND EASIER TO READ.
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));// THIS ADDS AN EMPTY BORDER AROUND THE MAIN PANEL WITH 15 PIXELS OF SPACE ON ALL SIDES (TOP, LEFT, BOTTOM, RIGHT). THIS CREATES A MARGIN AROUND THE CONTENT OF THE GUI, PREVENTING COMPONENTS FROM BEING TOO CLOSE TO THE EDGES OF THE WINDOW AND IMPROVING THE OVERALL LAYOUT AND AESTHETIC OF THE APPLICATION.  
+
 
         // ===================== PATIENT INFO =====================
-        JPanel patientPanel = new JPanel(new GridLayout(8, 2, 8, 8));
-        patientPanel.setBorder(BorderFactory.createTitledBorder("Patient Information"));
+        // tHIS IS THE MAIN PANEL THAT HOLDS ALL OTHER COMPONENTS, USING BORDERLayout TO ORGANIZE THEM INTO REGIONS (NORTH, SOUTH, EAST, WEST, CENTER)
+        JPanel patientPanel = new JPanel(new GridLayout(8, 2, 8, 8));// THIS PANEL USES A GRIDLAYOUT WITH 8 ROWS AND 2 COLUMNS, AND A GAP OF 8 PIXELS BOTH HORIZONTALLY AND VERTICALLY BETWEEN COMPONENTS. THIS LAYOUT ORGANIZES THE LABELS AND INPUT FIELDS IN A NEAT GRID, MAKING IT EASY FOR USERS TO ENTER PATIENT INFORMATION IN A STRUCTURED MANNER.
+        patientPanel.setBorder(BorderFactory.createTitledBorder("Patient Information"));//THIS ADDS A TITLED BORDER AROUND THE PATIENT INFORMATION PANEL WITH THE TITLE "Patient Information". THIS HELPS TO VISUALLY SEPARATE THIS SECTION FROM OTHER PARTS OF THE GUI AND PROVIDES A CLEAR LABEL FOR USERS TO UNDERSTAND THAT THIS AREA IS FOR ENTERING PATIENT DETAILS.
 
-        fnameField = new JTextField();
-        mnameField = new JTextField();
-        lnameField = new JTextField();
-        ageField = new JTextField();
-        provinceField = new JTextField();
-        cityField = new JTextField();
+        // Initialize text fields
+
+        fnameField = new JTextField();;// THIS CREATES A NEW JTextField FOR THE FIRST NAME INPUT. JTextField is a COMPONENT IN JAVA SWING THAT ALLOWS USERS TO ENTER OR EDIT A SINGLE LINE OF TEXT. THIS FIELD WILL BE USED TO CAPTURE THE FIRST NAME OF THE PATIENT IN THE GUI.
+        mnameField = new JTextField();// THIS CREATES A NEW JTextField FOR THE MIDDLE NAME INPUT. THIS FIELD WILL BE USED TO CAPTURE THE MIDDLE NAME OF THE PATIENT IN THE GUI.
+        lnameField = new JTextField();// THIS CREATES A NEW JTextField FOR THE LAST NAME INPUT. THIS FIELD WILL BE USED TO CAPTURE THE LAST NAME OF THE PATIENT IN THE GUI.
+        ageField = new JTextField();// THIS CREATES A NEW JTextField FOR THE AGE INPUT. THIS FIELD WILL BE USED TO CAPTURE THE AGE OF THE PATIENT IN THE GUI.
+        provinceField = new JTextField();// THIS CREATES A NEW JTextField FOR THE PROVINCE INPUT. THIS FIELD WILL BE USED TO CAPTURE THE PROVINCE OF THE PATIENT IN THE GUI.
+        cityField = new JTextField();// THIS CREATES A NEW JTextField FOR THE CITY INPUT. THIS FIELD WILL BE USED TO CAPTURE THE CITY OF THE PATIENT IN THE GUI.
 
         sexBox = new JComboBox<>(new String[]{"M", "F"});
 
-        patientPanel.add(new JLabel("Patient ID (Auto):"));
-        patientPanel.add(new JLabel(String.valueOf(patientID)));
+        patientPanel.add(new JLabel("Patient ID (Auto):"));// THIS ADDS A NEW JLabel WITH THE TEXT "Patient ID (Auto):" TO THE PATIENT PANEL. 
+        patientPanel.add(new JLabel(String.valueOf(patientID)));// THIS ADDS A NEW JLabel TO THE PATIENT PANEL THAT DISPLAYS THE CURRENT VALUE OF patientID. THIS LABEL SHOWS THE AUTO-GENERATED PATIENT ID TO THE USER, PROVIDING IMMEDIATE FEEDBACK ON THE UNIQUE IDENTIFIER ASSIGNED TO THE PATIENT BEING ENTERED INTO THE SYSTEM.
 
-        patientPanel.add(new JLabel("First Name:"));
+
+        patientPanel.add(new JLabel("First Name:"));//this adds the first name label and text field to the patient information panel, allowing users to input the patient's first name.
         patientPanel.add(fnameField);
 
-        patientPanel.add(new JLabel("Middle Name:"));
-        patientPanel.add(mnameField);
+        patientPanel.add(new JLabel("Middle Name:"));//this adds the middle name label and text field to the patient information panel, allowing users to input the patient's middle name.
 
-        patientPanel.add(new JLabel("Last Name:"));
+        patientPanel.add(mnameField);\
+
+        patientPanel.add(new JLabel("Last Name:"));;//this adds the last name label and text field to the patient information panel, allowing users to input the patient's last name.
+
         patientPanel.add(lnameField);
 
-        patientPanel.add(new JLabel("Age:"));
+        patientPanel.add(new JLabel("Age:"));;//this adds the age label and text field to the patient information panel, allowing users to input the patient's age.
+
         patientPanel.add(ageField);
 
-        patientPanel.add(new JLabel("Sex:"));
+        patientPanel.add(new JLabel("Sex:"));//this adds the sex label and combo box to the patient information panel, allowing users to select the
+
         patientPanel.add(sexBox);
 
         patientPanel.add(new JLabel("Province:"));
@@ -101,7 +116,7 @@ public class PagunTudenClinicAppGUI extends JFrame {
         // ===================== LAB TEST TABLE =====================
         JPanel labPanel = new JPanel(new BorderLayout());
         labPanel.setBorder(BorderFactory.createTitledBorder("Laboratory Tests (Enter Value Per Test)"));
-
+ // Table model with columns "Test Name" and "Conventional Value"
         tableModel = new DefaultTableModel(new Object[]{"Test Name", "Conventional Value"}, 0);
 
         String[] tests = {
@@ -111,11 +126,12 @@ public class PagunTudenClinicAppGUI extends JFrame {
                 "Potassium", "Chloride",
                 "Total Calcium", "Ionized Calcium"
         };
-
+  // it adds tests to the table model as rows, with the test name in the first column and an empty string in the second column for user input
         for (String test : tests) {
             tableModel.addRow(new Object[]{test, ""});
         }
 
+        // Initialize JTable with model
         testTable = new JTable(tableModel);
         testTable.setRowHeight(30);
 

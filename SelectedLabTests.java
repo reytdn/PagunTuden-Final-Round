@@ -22,7 +22,7 @@ public class SelectedLabTests {
                             double highSI,
                             String interpretation) {
 
-        // Format  para mag store sang test result as a string in sa list
+        // Format  to store the test result as a string in sa list
         chosenTests.add(
                 testName +
                 "\n   Conventional: " + String.format("%.2f", conventional) + " " + unitConv +
