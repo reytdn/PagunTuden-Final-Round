@@ -153,6 +153,13 @@ public class PagunTudenClinicAppGUI extends JFrame {
         JPanel topPanel = new JPanel(new GridLayout(1, 2, 15, 15));
         topPanel.add(patientPanel);
         topPanel.add(requestPanel);
+// Creates a panel (topPanel) with a grid layout (1 row, 2 columns, spacing 15px).
+//Adds patient info panel and request info panel side by side.
+//Adds panels and components to mainPanel using BorderLayout:
+//NORTH: patient + request info
+//CENTER: lab test panel
+//WEST: process button
+//SOUTH: scrollable results area
 
         mainPanel.add(topPanel, BorderLayout.NORTH);
         mainPanel.add(labPanel, BorderLayout.CENTER);
@@ -166,6 +173,10 @@ public class PagunTudenClinicAppGUI extends JFrame {
     private void processMultipleTests() {
 
         String sex = (String) sexBox.getSelectedItem();
+
+
+
+        //Initializes the report header with patient details (ID, name, age, sex, address, physician, last meal, collection date/time).
 
         resultArea.setText(
                 "=========== PAGUNTUDEN CLINIC LAB REPORT ===========\n\n" +
@@ -201,7 +212,13 @@ public class PagunTudenClinicAppGUI extends JFrame {
                 String unitConv = "", unitSI = "";
                 String status = "";
 
-                // ===================== RANGES BASED ON YOUR TABLE =====================
+                // ===================== RANGES BASED ON THE TABLE =====================
+
+                //- Converts value to SI units.
+//Defines normal ranges (different for male/female in some tests).
+//Sets units (mg/dL, mmol/L, etc.).
+//Determines status using interpretRange().
+
 
                 if (testName.equals("FBS")) {
                     si = value / 18.0;
